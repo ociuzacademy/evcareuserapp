@@ -1,5 +1,5 @@
 import 'package:ev_booking/view/home_page.dart';
-import 'package:ev_booking/view/signup.dart';
+import 'package:ev_booking/modules/signup/signup.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {

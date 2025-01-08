@@ -1,5 +1,5 @@
 import 'package:ev_booking/view/home_page.dart';
-import 'package:ev_booking/view/login_page.dart';
+import 'package:ev_booking/modules/login/login_page.dart';
 import 'package:flutter/material.dart';
 
 class EVRegistrationForm extends StatefulWidget {

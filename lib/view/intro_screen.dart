@@ -1,4 +1,4 @@
-import 'package:ev_booking/view/login_page.dart';
+import 'package:ev_booking/modules/login/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -11,33 +11,34 @@ class IntroductionPage extends StatelessWidget {
     List<PageViewModel> getPages() {
       return [
         PageViewModel(
-          image: Image.asset("assets/logo/intro1.jpg",fit: BoxFit.fill,),
+          image: Image.asset("assets/logo/carouselImage1.jpg",fit: BoxFit.fill,),
           title: "Welcome to Our App",
           body: "Discover features designed to enhance your experience.",
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.green,
+              color: Color(0xFF3AA17E),
             ),
             bodyTextStyle: TextStyle(
               fontSize: 16,
               color: Colors.black87,
             ),
             imagePadding: EdgeInsets.only(top: 20),
-            pageColor: Colors.white,
+            pageColor:  Color.fromARGB(255, 89, 223, 178),
           ),
         ),
 
+
         PageViewModel(
-          image: Image.asset("assets/logo/intro2.jpg"),
+          image: Image.asset("assets/logo/CarouselImage2.jpg"),
           title: "Stay Connected",
           body: "Engage and collaborate with ease using our tools.",
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.green,
+              color: Color(0xFF3AA17E),
             ),
             bodyTextStyle: TextStyle(
               fontSize: 16,
@@ -49,14 +50,14 @@ class IntroductionPage extends StatelessWidget {
         ),
 
         PageViewModel(
-          image: Image.asset("assets/logo/intro3..jpg"),
+          image: Image.asset("assets/logo/CarouselImage3.jpg"),
           title: "Achieve More",
           body: "Unlock your potential with our powerful features.",
           decoration: const PageDecoration(
             titleTextStyle: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Colors.green,
+              color: Color(0xFF3AA17E),
             ),
             bodyTextStyle: TextStyle(
               fontSize: 16,
@@ -84,29 +85,29 @@ class IntroductionPage extends StatelessWidget {
         done: const Text(
           "Done",
           style: TextStyle(
-            color: Colors.green,
-            fontSize: 18,
+            color: Color(0xFF3AA17E),
+            fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
         next: const Icon(
           Icons.arrow_forward,
           size: 24,
-          color: Colors.green,
+          color: Color(0xFF3AA17E),
         ),
         skip: const Text(
-          "Skip",
+          "Skip ",
           style: TextStyle(
-            color: Colors.green,
+            color: Color(0xFF3AA17E),
             fontSize: 16,
           ),
         ),
         showSkipButton: true,
         dotsDecorator: DotsDecorator(
-          size: const Size(10, 10),
+          size: const Size(5, 5),
           color: Colors.grey,
           activeSize: const Size(12, 12),
-          activeColor: Colors.green,
+          activeColor: const Color(0xFF3AA17E),
           activeShape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
