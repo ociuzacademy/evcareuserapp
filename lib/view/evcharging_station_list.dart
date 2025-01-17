@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class EVChargingStationList extends StatelessWidget {
   final List<Map<String, dynamic>> stations = [
     {
-      "image": "assets/logo/intro2.jpg",
+      "image": "assets/logo/carouselImage1.jpg",
       "name": "FastCharge EV Station",
       "address": "123 Greenway Drive, Springfield",
       "time": "24/7",
@@ -14,7 +14,7 @@ class EVChargingStationList extends StatelessWidget {
       "capacity": "150 kW"
     },
     {
-      "image": "assets/logo/intro2.jpg",
+      "image": "assets/logo/CarouselImage2.jpg",
       "name": "EcoCharge Hub",
       "address": "456 Elm Street, Greenville",
       "time": "6:00 AM - 10:00 PM",
@@ -23,7 +23,7 @@ class EVChargingStationList extends StatelessWidget {
       "capacity": "120 kW"
     },
     {
-      "image": "assets/logo/intro2.jpg",
+      "image": "assets/logo/CarouselImage3.jpg",
       "name": "PowerUp Station",
       "address": "789 Maple Avenue, Rivertown",
       "time": "8:00 AM - 8:00 PM",
@@ -50,7 +50,7 @@ class EVChargingStationList extends StatelessWidget {
             onTap: () {
               Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  ServiceStationBookingPage()),
+              MaterialPageRoute(builder: (context) =>  const ServiceStationBookingPage()),
             );
             },
             child: Card(

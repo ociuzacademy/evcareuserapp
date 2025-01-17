@@ -1,5 +1,6 @@
-import 'package:ev_booking/view/station_home_page.dart';
-import 'package:ev_booking/view/vehicle_register.dart';
+import 'package:ev_booking/modules/login/pages/login_page.dart';
+import 'package:ev_booking/modules/signup/services/signup_service.dart';
+import 'package:ev_booking/view/home_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -11,16 +12,58 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+
+  // Controllers for form fields
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
   @override
   void dispose() {
+    // Dispose all controllers
+    _nameController.dispose();
+    _usernameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  // Function to handle form submission
+  Future<void> _registerUser() async {
+    if (_formKey.currentState?.validate() == true) {
+      try {
+        final responseMessage = await UserRegistration(
+          name: _nameController.text.trim(),
+          username: _usernameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+          phone: _phoneController.text.trim(),
+        );
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseMessage)),
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginPage (),
+          ),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Registration failed: $e')),
+        );
+      }
+    }
   }
 
   @override
@@ -46,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
           // Foreground content
           Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(25.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -68,6 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     // Full Name Field
                     _buildTextField(
                       label: 'Full Name',
+                      controller: _nameController,
                       icon: Icons.person,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -81,6 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     // Username Field
                     _buildTextField(
                       label: 'Username',
+                      controller: _usernameController,
                       icon: Icons.account_circle,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -97,6 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     // Email Field
                     _buildTextField(
                       label: 'Email',
+                      controller: _emailController,
                       icon: Icons.email,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -113,6 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     // Phone Number Field
                     _buildTextField(
                       label: 'Phone Number',
+                      controller: _phoneController,
                       icon: Icons.phone,
                       keyboardType: TextInputType.phone,
                       validator: (value) {
@@ -187,19 +234,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           elevation: 5,
                         ),
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() == true) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Registration Successful')),
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const EVRegistrationForm(),
-                              ),
-                            );
-                          }
-                        },
+                        onPressed: _registerUser,
                         child: const Text(
                           'Register',
                           style: TextStyle(
@@ -209,6 +244,30 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ),
+                    Row(
+                    mainAxisAlignment: MainAxisAlignment.end, 
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                           Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Login?',
+                          style: TextStyle(
+                            color: Color(0xFF176A4D), 
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
                   ],
                 ),
               ),

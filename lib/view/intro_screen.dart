@@ -1,4 +1,4 @@
-import 'package:ev_booking/modules/login/login_page.dart';
+import 'package:ev_booking/modules/login/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
@@ -11,7 +11,8 @@ class IntroductionPage extends StatelessWidget {
     List<PageViewModel> getPages() {
       return [
         PageViewModel(
-          image: Image.asset("assets/logo/carouselImage1.jpg",fit: BoxFit.fill,),
+          image: ClipRRect(borderRadius: BorderRadius.circular(15),
+          child: Image.asset("assets/logo/carouselImage1.jpg",fit: BoxFit.fill,),),
           title: "Welcome to Our App",
           body: "Discover features designed to enhance your experience.",
           decoration: const PageDecoration(
@@ -31,7 +32,9 @@ class IntroductionPage extends StatelessWidget {
 
 
         PageViewModel(
-          image: Image.asset("assets/logo/CarouselImage2.jpg"),
+          image: ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Image.asset("assets/logo/CarouselImage2.jpg")),
           title: "Stay Connected",
           body: "Engage and collaborate with ease using our tools.",
           decoration: const PageDecoration(
@@ -45,12 +48,13 @@ class IntroductionPage extends StatelessWidget {
               color: Colors.black87,
             ),
             imagePadding: EdgeInsets.only(top: 20),
-            pageColor: Colors.white,
+            pageColor: Color.fromARGB(255, 89, 223, 178),
           ),
         ),
 
         PageViewModel(
-          image: Image.asset("assets/logo/CarouselImage3.jpg"),
+          image: ClipRRect(borderRadius: BorderRadius.circular(15),
+          child: Image.asset("assets/logo/CarouselImage3.jpg")),
           title: "Achieve More",
           body: "Unlock your potential with our powerful features.",
           decoration: const PageDecoration(
@@ -64,7 +68,7 @@ class IntroductionPage extends StatelessWidget {
               color: Colors.black87,
             ),
             imagePadding: EdgeInsets.only(top: 20),
-            pageColor: Colors.white,
+            pageColor: Color.fromARGB(255, 89, 223, 178),
           ),
         ),
 

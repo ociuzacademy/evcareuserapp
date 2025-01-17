@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 class ServiceStation extends StatelessWidget {
   final List<Map<String, dynamic>> serviceCenters = [
     {
-      "image": "assets/logo/intro1.jpg",
+      "image": "assets/logo/chargingStation.jpg",
       "name": "Green EV Service Center",
       "address": "123 Greenway Blvd, Springfield",
       "openingTime": "9:00 AM - 6:00 PM",
     },
     {
-      "image": "assets/logo/intro1.jpg",
+      "image": "assets/logo/CarouselImage2.jpg",
       "name": "EcoFix Garage",
       "address": "456 Elm Street, Greenville",
       "openingTime": "8:30 AM - 7:30 PM",
     },
     {
-      "image": "assets/logo/intro1.jpg",
+      "image": "assets/logo/carouselImage1.jpg",
       "name": "Charge & Care Center",
       "address": "789 Maple Avenue, Rivertown",
       "openingTime": "10:00 AM - 8:00 PM",

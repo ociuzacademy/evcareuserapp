@@ -1,6 +1,8 @@
+import 'package:ev_booking/modules/vehicleRegistration/service/vehicle_reg_service.dart';
 import 'package:ev_booking/view/home_page.dart';
-import 'package:ev_booking/modules/login/login_page.dart';
+import 'package:ev_booking/modules/login/pages/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class EVRegistrationForm extends StatefulWidget {
   const EVRegistrationForm({super.key});
@@ -33,6 +35,74 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
   String? _selectedModel;
   String? _selectedConnector;
 
+  // Validation for VIN
+  String? validateVIN(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter the VIN';
+    }
+    final regExp = RegExp(r'^[A-HJ-NPR-Z0-9]{17}$');
+    if (!regExp.hasMatch(value)) {
+      return 'Enter a valid 17-character VIN (A-Z, 0-9, no I, O, Q)';
+    }
+    return null;
+  }
+
+  // Validation for Registration Number
+  String? _validateRegistrationNumber(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter the registration number';
+    }
+    final regExp = RegExp(r'^[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}$');
+    if (!regExp.hasMatch(value)) {
+      return 'Enter a valid registration number (e.g., KL-01-AB-1234)';
+    }
+    return null;
+  }
+
+  Future<void> _vehicleRegistration() async {
+    if (_formKey.currentState?.validate() == true) {
+      try {
+        
+        final responseMessage = await VehicleRegisterService(
+          brand: _selectedBrand??"",
+          model: _selectedModel??"",
+          connector_type: _selectedConnector??"",
+          vin: _vinController.text.trim(),
+          registration_num :_registrationController.text.trim(),
+          user: 5,
+          
+        );
+
+        if (responseMessage.status == 'success') {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Registration successful')),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const UserHomePage(),
+              ),
+            );
+          }
+          
+
+          
+        } else {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(responseMessage.message??"Unkown error")),
+            );
+          }
+        }
+      } catch (e) {
+        // Handle exceptions
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error occurred: $e')),
+        );
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -57,7 +127,7 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
           // Centered form
           Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(25.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -131,12 +201,7 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
                     // VIN Field
                     _buildTextField(
                       label: 'VIN',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the VIN';
-                        }
-                        return null;
-                      },
+                      validator: validateVIN,
                       controller: _vinController,
                       icon: Icons.directions_car,
                     ),
@@ -145,12 +210,7 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
                     // Registration Number Field
                     _buildTextField(
                       label: 'Registration Number',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter the registration number';
-                        }
-                        return null;
-                      },
+                      validator: _validateRegistrationNumber,
                       controller: _registrationController,
                       icon: Icons.article,
                     ),
@@ -168,17 +228,7 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
                           ),
                         ),
                         onPressed: () {
-                          if (_formKey.currentState?.validate() == true) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Registration Successful')),
-                            );
-                          }
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>  const LoginPage(),
-                              ),
-                            );
+                          _vehicleRegistration(); // Wrap the method in an anonymous function
                         },
                         child: const Text(
                           'Register',

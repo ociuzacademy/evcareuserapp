@@ -1,6 +1,9 @@
+import 'package:ev_booking/modules/login/service/login_service.dart';
 import 'package:ev_booking/view/home_page.dart';
-import 'package:ev_booking/modules/signup/signup.dart';
+import 'package:ev_booking/modules/signup/pages/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:ev_booking/constants/urls.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,12 +16,53 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   @override
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  // Function to handle form submission
+  Future<void> _loginUser() async {
+    if (_formKey.currentState?.validate() == true) {
+      try {
+        final responseMessage = await UserLogin(
+          username: _usernameController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+       // print(responseMessage);
+
+        if (responseMessage.status == 'success') {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Login successful')),
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const UserHomePage(),
+              ),
+            );
+          }
+         
+        } else {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(responseMessage.message??"Unkown error")),
+            );
+          }
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Login failed: $e')),
+          );
+        }
+      }
+    }
   }
 
   @override
@@ -44,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
           // Foreground content
           Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(25.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -88,6 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                           controller: _usernameController,
                           label: 'Username',
                           icon: Icons.account_circle,
+                          
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your username';
@@ -128,15 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         elevation: 5,
                       ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>  const UserHomePage()),
-                          );
-                        }
-                      },
+                      onPressed: _loginUser,
                       child: const Text(
                         'Login',
                         style: TextStyle(
@@ -156,7 +193,8 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const RegisterPage()),
+                              builder: (context) => const RegisterPage(),
+                            ),
                           );
                         },
                         child: const Text(
@@ -196,12 +234,26 @@ class _LoginPageState extends State<LoginPage> {
     required IconData icon,
     required String? Function(String?) validator,
     bool isPassword = false,
+    
   }) {
     return TextFormField(
       controller: controller,
-      obscureText: isPassword,
+       obscureText: isPassword && !_isPasswordVisible,
       decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: const Color(0xFF176A4D)), 
+        prefixIcon: Icon(icon, color: const Color(0xFF176A4D)),
+          suffixIcon: isPassword
+            ? IconButton(
+                icon: Icon(
+                  _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: const Color(0xFF176A4D),
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  });
+                },
+              )
+            : null,
         labelText: label,
         labelStyle: const TextStyle(color: Color(0xFF176A4D)),
         filled: true,

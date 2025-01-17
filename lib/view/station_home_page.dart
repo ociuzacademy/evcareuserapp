@@ -1,6 +1,6 @@
 import 'package:ev_booking/view/service_list.dart';
 import 'package:ev_booking/view/service_station_list.dart';
-import 'package:ev_booking/modules/signup/signup.dart';
+import 'package:ev_booking/modules/signup/pages/signup.dart';
 import 'package:ev_booking/view/status_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';

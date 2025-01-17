@@ -3,38 +3,43 @@ import 'dart:io';
 
 
 import 'package:ev_booking/constants/urls.dart';
+import 'package:ev_booking/modules/login/model/login_response_model.da';
 import 'package:http/http.dart' as http;
 
-Future<String> UserRegistration({
-  required String name,
+Future<LoginResponseModel> UserLogin({
   required String username,
-  required String email,
   required String password,
-  required String phone,
 }) async {
   try {
     Map<String, dynamic> param = {
-      "name": name,
       "username": username,
-      "email": email,
       "password": password,
-      "phone": phone,
     };
 
-    final response = await http.post(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_register/'), 
+    final resp = await http.post(
+      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/login/'), 
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
     );
 
-    if (response.statusCode == 201) {
-      return "Registration successful";
+    if (resp.statusCode == 200) {
+      /**
+       *  final List<dynamic> decoded = jsonDecode(resp.body);
+      final response =
+          decoded.map((item) => ProductModel.fromJson(item)).toList();
+      return response;
+       */
+
+      final dynamic decoded = jsonDecode(resp.body);
+      final response = LoginResponseModel.fromJson(decoded);
+          
+      return response;
     } else {
-      final Map<String, dynamic> errorResponse = jsonDecode(response.body);
+      final Map<String, dynamic> errorResponse = jsonDecode(resp.body);
       throw Exception(
-        'Failed to register: ${errorResponse['message'] ?? 'Unknown error'}',
+        'Failed to login: ${errorResponse['message'] ?? 'Unknown error'}',
       );
     }
   } on SocketException {

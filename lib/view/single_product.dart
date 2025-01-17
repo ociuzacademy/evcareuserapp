@@ -1,3 +1,4 @@
+import 'package:ev_booking/view/cart.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailPage extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(12),
                   image: const DecorationImage(
-                    image: AssetImage('assets/logo/product_placeholder.png'), // Replace with actual product image
+                    image: AssetImage('assets/icons/image.png'), // Replace with actual product image
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -119,12 +120,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     child: ElevatedButton(
                       onPressed: () {
                         // Navigate to Cart Page
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CartPage(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const CartPage(),
+                        //   ),
+                        // );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF3AA17E),
@@ -174,23 +175,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 }
 
-// Placeholder Cart Page
-class CartPage extends StatelessWidget {
-  const CartPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cart', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF3AA17E),
-      ),
-      body: const Center(
-        child: Text('Cart Page Content'),
-      ),
-    );
-  }
-}
 
 // Placeholder Buy Now Page
 class BuyNowPage extends StatelessWidget {

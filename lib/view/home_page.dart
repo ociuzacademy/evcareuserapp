@@ -1,3 +1,4 @@
+import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.dart';
 import 'package:ev_booking/view/evcharging_station_list.dart';
 import 'package:ev_booking/view/service_confirm.dart';
 import 'package:ev_booking/view/service_station_list.dart';
@@ -147,6 +148,50 @@ class _UserHomePageState extends State<UserHomePage> {
                       ),
                     ],
                   ),
+
+                  // Registration Link
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(builder: (context) => const EVRegistrationForm()), // Replace with your AddVehiclePage
+                  //         );
+                  //       },
+                  //       child: Container(
+                  //         width: 160,
+                  //         height: 120,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.white,
+                  //           borderRadius: BorderRadius.circular(12),
+                  //           boxShadow: const [
+                  //             BoxShadow(
+                  //               color: Colors.black26,
+                  //               blurRadius: 6,
+                  //               spreadRadius: 2,
+                  //               offset: Offset(2, 4),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         child: const Center(
+                  //           child: Text(
+                  //             'Add Vehicle',
+                  //             style: TextStyle(
+                  //               fontSize: 16,
+                  //               fontWeight: FontWeight.bold,
+                  //               color: Colors.black,
+                  //             ),
+                  //             textAlign: TextAlign.center,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+
+
                 ],
               ),
               // Service station Page
@@ -161,6 +206,21 @@ class _UserHomePageState extends State<UserHomePage> {
           ),
         ],
       ),
+
+      floatingActionButton: FloatingActionButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const EVRegistrationForm()), // Replace with your page
+        );
+      },
+      tooltip: 'Add vehicle',
+      backgroundColor: const Color.fromARGB(255, 248, 251, 251),
+      child: const Icon(Icons.add, size: 30, color: Color(0xFF3AA17E)),
+    ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+    
+   
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onBottomNavTapped,

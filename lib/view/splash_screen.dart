@@ -2,7 +2,7 @@ import 'package:ev_booking/main.dart';
 import 'package:ev_booking/view/home.dart';
 import 'package:ev_booking/view/intro_screen.dart';
 
-import 'package:ev_booking/modules/login/login_page.dart';
+import 'package:ev_booking/modules/login/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
