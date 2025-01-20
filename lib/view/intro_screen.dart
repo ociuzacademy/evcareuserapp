@@ -19,14 +19,14 @@ class IntroductionPage extends StatelessWidget {
             titleTextStyle: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF3AA17E),
+              color: Color.fromARGB(255, 29, 126, 94),
             ),
             bodyTextStyle: TextStyle(
               fontSize: 16,
               color: Colors.black87,
             ),
             imagePadding: EdgeInsets.only(top: 20),
-            pageColor:  Color.fromARGB(255, 89, 223, 178),
+            pageColor:  Color.fromARGB(255, 143, 240, 208),
           ),
         ),
 
@@ -41,14 +41,14 @@ class IntroductionPage extends StatelessWidget {
             titleTextStyle: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF3AA17E),
+              color: Color.fromARGB(255, 29, 126, 94),
             ),
             bodyTextStyle: TextStyle(
               fontSize: 16,
               color: Colors.black87,
             ),
             imagePadding: EdgeInsets.only(top: 20),
-            pageColor: Color.fromARGB(255, 89, 223, 178),
+            pageColor: Color.fromARGB(255, 143, 240, 208),
           ),
         ),
 
@@ -61,14 +61,14 @@ class IntroductionPage extends StatelessWidget {
             titleTextStyle: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF3AA17E),
+              color: Color.fromARGB(255, 29, 126, 94),
             ),
             bodyTextStyle: TextStyle(
               fontSize: 16,
               color: Colors.black87,
             ),
             imagePadding: EdgeInsets.only(top: 20),
-            pageColor: Color.fromARGB(255, 89, 223, 178),
+            pageColor: Color.fromARGB(255, 143, 240, 208),
           ),
         ),
 

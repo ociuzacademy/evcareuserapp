@@ -5,7 +5,7 @@ import 'package:ev_booking/modules/vehicleRegistration/model/vehicle_register_mo
 
 import 'package:http/http.dart' as http;
 
-Future<VehicleRegisterModel> VehicleRegisterService({
+Future<VehicleRegisterResponseModel> vehicleRegisterService({
   required String brand,
   required String model,
   required String connector_type,
@@ -14,14 +14,14 @@ Future<VehicleRegisterModel> VehicleRegisterService({
   required int user,
 }) async {
   try {
-    Map<dynamic, dynamic> param = {
+        final s =int.parse("2");
+    Map<String, dynamic> param = {
       "brand": brand,
       "model": model,
       "connector_type": connector_type,
       "vin": vin,
       "registration_num": registration_num,
-      "user" :user,
-       
+      "user" : s,  
     };
 
     final resp = await http.post(
@@ -30,12 +30,13 @@ Future<VehicleRegisterModel> VehicleRegisterService({
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
+      
     );
 
-    if (resp.statusCode == 201) {
+    if (resp.statusCode == 200) {
       
       final dynamic decoded = jsonDecode(resp.body);
-      final response = VehicleRegisterModel.fromJson(decoded);
+      final response = VehicleRegisterResponseModel.fromJson(decoded);
           
       return response;
     } else {

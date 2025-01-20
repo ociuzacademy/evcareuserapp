@@ -4,11 +4,11 @@
 
 import 'dart:convert';
 
-List<ServiceCentre> serviceCentreFromJson(String str) => List<ServiceCentre>.from(json.decode(str).map((x) => ServiceCentre.fromJson(x)));
+List<ServiceCentreModel> serviceCentreFromJson(String str) => List<ServiceCentreModel>.from(json.decode(str).map((x) => ServiceCentreModel.fromJson(x)));
 
-String serviceCentreToJson(List<ServiceCentre> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String serviceCentreToJson(List<ServiceCentreModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ServiceCentre {
+class ServiceCentreModel {
     int? id;
     String? name;
     String? username;
@@ -23,7 +23,7 @@ class ServiceCentre {
     String? utype;
     String? status;
 
-    ServiceCentre({
+    ServiceCentreModel({
         this.id,
         this.name,
         this.username,
@@ -39,7 +39,7 @@ class ServiceCentre {
         this.status,
     });
 
-    factory ServiceCentre.fromJson(Map<String, dynamic> json) => ServiceCentre(
+    factory ServiceCentreModel.fromJson(Map<String, dynamic> json) => ServiceCentreModel(
         id: json["id"],
         name: json["name"],
         username: json["username"],

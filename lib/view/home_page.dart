@@ -1,7 +1,7 @@
 import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.dart';
 import 'package:ev_booking/view/evcharging_station_list.dart';
 import 'package:ev_booking/view/service_confirm.dart';
-import 'package:ev_booking/view/service_station_list.dart';
+import 'package:ev_booking/modules/service_center/page/service_station_list.dart';
 import 'package:ev_booking/view/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -39,6 +39,9 @@ class _UserHomePageState extends State<UserHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -59,11 +62,10 @@ class _UserHomePageState extends State<UserHomePage> {
               // Home Page
               Column(
                 children: [
-                  const SizedBox(height: 40),
-              
+                  SizedBox(height: screenHeight * 0.05),
                   CarouselSlider(
                     options: CarouselOptions(
-                      height: 300.0,
+                      height: screenHeight * 0.35,
                       autoPlay: true,
                       enlargeCenterPage: true,
                       autoPlayCurve: Curves.easeInOut,
@@ -72,9 +74,9 @@ class _UserHomePageState extends State<UserHomePage> {
                     ),
                     items: imageUrls.map((url) {
                       return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                        margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(screenWidth * 0.04),
                           boxShadow: const [
                             BoxShadow(
                               color: Colors.black26,
@@ -85,7 +87,7 @@ class _UserHomePageState extends State<UserHomePage> {
                           ],
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
+                          borderRadius: BorderRadius.circular(screenWidth * 0.04),
                           child: Image.asset(
                             url,
                             fit: BoxFit.fitWidth,
@@ -94,12 +96,12 @@ class _UserHomePageState extends State<UserHomePage> {
                       );
                     }).toList(),
                   ),
-                  const SizedBox(height: 50),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  SizedBox(height: screenHeight * 0.06),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           'Welcome to EV CARE',
                           style: TextStyle(
                             fontSize: 26,
@@ -108,8 +110,8 @@ class _UserHomePageState extends State<UserHomePage> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 10),
-                        Text(
+                        SizedBox(height: screenHeight * 0.01),
+                        const Text(
                           'Explore our services and EV charging stations with ease.',
                           style: TextStyle(
                             fontSize: 16,
@@ -120,7 +122,7 @@ class _UserHomePageState extends State<UserHomePage> {
                       ],
                     ),
                   ),
-                   const SizedBox(height: 40),
+                  SizedBox(height: screenHeight * 0.05),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -148,57 +150,27 @@ class _UserHomePageState extends State<UserHomePage> {
                       ),
                     ],
                   ),
-
-                  // Registration Link
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(builder: (context) => const EVRegistrationForm()), // Replace with your AddVehiclePage
-                  //         );
-                  //       },
-                  //       child: Container(
-                  //         width: 160,
-                  //         height: 120,
-                  //         decoration: BoxDecoration(
-                  //           color: Colors.white,
-                  //           borderRadius: BorderRadius.circular(12),
-                  //           boxShadow: const [
-                  //             BoxShadow(
-                  //               color: Colors.black26,
-                  //               blurRadius: 6,
-                  //               spreadRadius: 2,
-                  //               offset: Offset(2, 4),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         child: const Center(
-                  //           child: Text(
-                  //             'Add Vehicle',
-                  //             style: TextStyle(
-                  //               fontSize: 16,
-                  //               fontWeight: FontWeight.bold,
-                  //               color: Colors.black,
-                  //             ),
-                  //             textAlign: TextAlign.center,
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
-
-
+                  FloatingActionButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const EVRegistrationForm()),
+                      );
+                    },
+                    tooltip: 'Add vehicle',
+                    backgroundColor: const Color.fromARGB(255, 248, 251, 251),
+                    child: const Icon(Icons.add, size: 30, color: Color(0xFF3AA17E)),
+                    
+                  ),
+                //floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+                  
                 ],
               ),
-              // Service station Page
-               ServiceStation(),
+              // Service Station Page
+              ServiceStation(),
 
-              // Charging station Page
-               EVChargingStationList(),
+              // Charging Station Page
+              EVChargingStationList(),
 
               // Profile Page
               const ProfilePage(),
@@ -206,43 +178,28 @@ class _UserHomePageState extends State<UserHomePage> {
           ),
         ],
       ),
-
-      floatingActionButton: FloatingActionButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const EVRegistrationForm()), // Replace with your page
-        );
-      },
-      tooltip: 'Add vehicle',
-      backgroundColor: const Color.fromARGB(255, 248, 251, 251),
-      child: const Icon(Icons.add, size: 30, color: Color(0xFF3AA17E)),
-    ),
-    floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-    
-   
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onBottomNavTapped,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home,size: 30,),
+            icon: Icon(Icons.home, size: 30),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.miscellaneous_services,size: 30,),
+            icon: Icon(Icons.miscellaneous_services, size: 30),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.electrical_services,size: 30,),
+            icon: Icon(Icons.electrical_services, size: 30),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle,size: 30,),
+            icon: Icon(Icons.account_circle, size: 30),
             label: '',
           ),
         ],
-        type: BottomNavigationBarType.fixed, 
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xFF3AA17E),
         unselectedItemColor: const Color.fromARGB(255, 20, 19, 19),
         selectedLabelStyle: const TextStyle(
@@ -258,28 +215,30 @@ class _UserHomePageState extends State<UserHomePage> {
 
   Widget _buildFeatureCard(BuildContext context,
       {required String title, required String image, required VoidCallback onTap}) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return GestureDetector(
       onTap: onTap,
       child: Card(
         elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(screenWidth * 0.03)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(12),
-                topRight: Radius.circular(12),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(screenWidth * 0.03),
+                topRight: Radius.circular(screenWidth * 0.03),
               ),
               child: Image.asset(
                 image,
-                width: 140,
-                height: 100,
+                width: screenWidth * 0.35,
+                height: screenWidth * 0.25,
                 fit: BoxFit.cover,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(screenWidth * 0.02),
               child: Text(
                 title,
                 style: const TextStyle(

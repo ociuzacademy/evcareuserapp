@@ -1,3 +1,5 @@
+import 'package:ev_booking/modules/products/model/productlist.dart';
+import 'package:ev_booking/modules/products/service/product_list_service.dart';
 import 'package:ev_booking/view/single_product.dart';
 import 'package:flutter/material.dart';
 
@@ -6,77 +8,56 @@ class ProductListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Example product list
-    final List<Map<String, dynamic>> products = [
-      {
-        'name': 'Product 1',
-        'description': 'This is product 1',
-        'price': 100.0,
-      },
-      {
-        'name': 'Product 2',
-        'description': 'This is product 2',
-        'price': 150.0,
-      },
-      {
-        'name': 'Product 3',
-        'description': 'This is product 3',
-        'price': 200.0,
-      },
-      {
-        'name': 'Product 4',
-        'description': 'This is product 4',
-        'price': 250.0,
-      },
-    ];
+   
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF3AA17E),
-        elevation: 0,
-        actions: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              IconButton(
-                onPressed: () {
-                  // Navigate to cart page (to be implemented)
-                },
-                icon: const Icon(Icons.shopping_cart, color: Colors.white),
-              ),
-              Positioned(
-                right: 8,
-                top: 8,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Text(
-                    '3', // Example cart item count
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+      
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // Number of items per row
-            mainAxisSpacing: 8.0,
-            crossAxisSpacing: 8.0,
-            childAspectRatio: 0.75, // Adjust the aspect ratio for card size
-          ),
-          itemCount: products.length,
-          itemBuilder: (context, index) {
-            final product = products[index];
-            return _buildProductCard(context, product);
+
+        
+        child: FutureBuilder<List<ProductListModel>>(
+          future:productList(),
+          builder: (context, snapshot) {
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          // Error State
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("Error: ${snapshot.error}"),
+            );
+          }
+
+          // Empty Response data array
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(
+              child: Text("No service found"),
+            );
+          }
+            
+          List<ProductListModel> products = snapshot.data!.toList();
+          return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // Number of items per row
+              mainAxisSpacing: 8.0,
+              crossAxisSpacing: 8.0,
+              childAspectRatio: 0.75, // Adjust the aspect ratio for card size
+            ),
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return _buildProductCard(context, product as Map<String, dynamic>);
+            },
+          );
           },
         ),
       ),

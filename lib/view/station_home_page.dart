@@ -1,5 +1,5 @@
 import 'package:ev_booking/view/service_list.dart';
-import 'package:ev_booking/view/service_station_list.dart';
+import 'package:ev_booking/modules/service_center/page/service_station_list.dart';
 import 'package:ev_booking/modules/signup/pages/signup.dart';
 import 'package:ev_booking/view/status_page.dart';
 import 'package:flutter/material.dart';

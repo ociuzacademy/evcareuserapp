@@ -1,5 +1,7 @@
+import 'package:ev_booking/view/buy_now.dart';
 import 'package:ev_booking/view/cart.dart';
 import 'package:flutter/material.dart';
+
 
 class ProductDetailPage extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -119,13 +121,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Navigate to Cart Page
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const CartPage(),
-                        //   ),
-                        // );
+                        //Navigate to Cart Page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CartPage(
+                              cartItems: [
+                                {
+                                  'name': widget.product['name'],
+                                  'price': widget.product['price'],
+                                  'quantity': quantity,
+                                }
+                              ],
+                            ),
+                          ),
+                        );
+
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF3AA17E),
@@ -145,12 +156,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     child: ElevatedButton(
                       onPressed: () {
                         // Navigate to Buy Now Page
-                        Navigator.push(
+                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const BuyNowPage(),
+                            builder: (context) => BuyNowPage(
+                              productName: widget.product['name'],
+                              productPrice: widget.product['price'],
+                              quantity: quantity,
+                            ),
                           ),
                         );
+
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.orange,
@@ -177,20 +193,3 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
 
 
-// Placeholder Buy Now Page
-class BuyNowPage extends StatelessWidget {
-  const BuyNowPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Checkout', style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF3AA17E),
-      ),
-      body: const Center(
-        child: Text('Buy Now Page Content'),
-      ),
-    );
-  }
-}
