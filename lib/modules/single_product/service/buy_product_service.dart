@@ -3,21 +3,25 @@ import 'dart:io';
 
 
 import 'package:ev_booking/constants/urls.dart';
-import 'package:ev_booking/modules/login/model/login_response_model.dart';
+
+import 'package:ev_booking/modules/single_product/model/product_purchase_response_model.dart';
 import 'package:http/http.dart' as http;
 
-Future<LoginResponseModel> UserLogin({
-  required String username,
-  required String password,
+Future<ProductPurchaseResponseModel> buyProductService({
+  required String user_id,
+  required String product_id,
+  required int quantity,
+
 }) async {
   try {
     Map<String, dynamic> param = {
-      "username": username,
-      "password": password,
+     "user":user_id,
+      "product": product_id,
+      "quantity": quantity,
     };
 
     final resp = await http.post(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/login/'), 
+      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/buy_product/'), 
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
@@ -33,13 +37,13 @@ Future<LoginResponseModel> UserLogin({
        */
 
       final dynamic decoded = jsonDecode(resp.body);
-      final response = LoginResponseModel.fromJson(decoded);
+      final response = ProductPurchaseResponseModel.fromJson(decoded);
           
       return response;
     } else {
       final Map<String, dynamic> errorResponse = jsonDecode(resp.body);
       throw Exception(
-        'Failed to login: ${errorResponse['message'] ?? 'Unknown error'}',
+        '${errorResponse['message'] ?? 'Unknown error'}',
       );
     }
   } on SocketException {

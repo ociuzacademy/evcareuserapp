@@ -62,14 +62,14 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
   Future<void> _vehicleRegistration() async {
     if (_formKey.currentState?.validate() == true) {
       try {
-    
+        final s =int.parse("2");
         final responseMessage = await vehicleRegisterService(
           brand: _selectedBrand??"",
           model: _selectedModel??"",
           connector_type: _selectedConnector??"",
           vin: _vinController.text.trim(),
           registration_num :_registrationController.text.trim(),
-          user:  2,
+          user:  s,
           
         );
 
@@ -78,7 +78,7 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Registration successful')),
             );
-            Navigator.pushReplacement(
+            Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const UserHomePage(),

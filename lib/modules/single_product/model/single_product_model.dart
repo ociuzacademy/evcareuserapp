@@ -1,49 +1,49 @@
 // To parse this JSON data, do
 //
-//     final productList = productListFromJson(jsonString);
+//     final singleProductListModel = singleProductListModelFromJson(jsonString);
 
 import 'dart:convert';
 
-List<SingleProductListModel> productListFromJson(String str) => List<SingleProductListModel>.from(json.decode(str).map((x) => SingleProductListModel.fromJson(x)));
+SingleProductListModel singleProductListModelFromJson(String str) => SingleProductListModel.fromJson(json.decode(str));
 
-String productListToJson(List<SingleProductListModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String singleProductListModelToJson(SingleProductListModel data) => json.encode(data.toJson());
 
 class SingleProductListModel {
     int? id;
+    String? image;
     String? name;
     String? description;
     String? price;
     String? quantity;
-    String? image;
     int? serviceCentre;
 
     SingleProductListModel({
         this.id,
+        this.image,
         this.name,
         this.description,
         this.price,
         this.quantity,
-        this.image,
         this.serviceCentre,
     });
 
     factory SingleProductListModel.fromJson(Map<String, dynamic> json) => SingleProductListModel(
         id: json["id"],
+        image: json["image"],
         name: json["name"],
         description: json["description"],
         price: json["price"],
         quantity: json["quantity"],
-        image: json["image"],
         serviceCentre: json["service_centre"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
+        "image": image,
         "name": name,
         "description": description,
         "price": price,
         "quantity": quantity,
-        "image": image,
         "service_centre": serviceCentre,
     };
 }

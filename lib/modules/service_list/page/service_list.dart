@@ -98,7 +98,7 @@ class _ServiceListState extends State<ServiceList> {
                 ),
                 child: Text(
                   'Continue (₹$totalAmount)',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                 ),
               ),
             ),

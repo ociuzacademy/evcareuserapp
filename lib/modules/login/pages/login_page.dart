@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Login successful')),
             );
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => const UserHomePage(),
@@ -197,7 +197,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         },
-                        child: const Text(
+                        child: const 
+                        Text(
                           'Sign Up',
                           style: TextStyle(
                             color: Color(0xFF176A4D),

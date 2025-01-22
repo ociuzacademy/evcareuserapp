@@ -1,7 +1,7 @@
 import 'package:ev_booking/modules/service_center/model/service_center_model.dart';
 import 'package:ev_booking/modules/service_center/service/service_station_service.dart';
 import 'package:ev_booking/modules/products/page/product_list.dart';
-import 'package:ev_booking/view/service_list.dart';
+import 'package:ev_booking/modules/service_list/page/service_list.dart';
 import 'package:flutter/material.dart';
 
 class ServiceStation extends StatelessWidget {
@@ -30,9 +30,15 @@ class ServiceStation extends StatelessWidget {
           // Error State
           if (snapshot.hasError) {
             return Center(
-              child: Text("Error: ${snapshot.error}"),
+              child: Column(
+                children: [
+                  Image.asset('assets/logo/error.jpg'),
+                  Text("Error: ${snapshot.error}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                ],
+              ),
             );
           }
+
 
           // Empty Response data array
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -60,16 +66,25 @@ class ServiceStation extends StatelessWidget {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // ClipRRect(
-                          //   borderRadius: BorderRadius.circular(10),
-                          //   child: Image.network(
-                          //     center.image ?? 'assets/icons/image.png',
-                          //      //center.image,
-                          //     width: screenWidth * 0.2, // Responsive width
-                          //     height: screenWidth * 0.2, // Responsive height
-                          //     fit: BoxFit.cover,
-                          //   ),
-                          // ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              center.image ?? 'assets/icons/image.png', // Load the external image if `center.image` is null
+                              width: screenWidth * 0.2, // Responsive width
+                              height: screenWidth * 0.2, // Responsive height
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                // Fallback to a local asset image if the external image fails to load
+                                return Image.asset(
+                                  'assets/icons/image.png',
+                                  width: screenWidth * 0.2, // Responsive width
+                                  height: screenWidth * 0.2, // Responsive height
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
+                          ),
+
                           SizedBox(width: screenWidth * 0.03), // Responsive spacing
                           Expanded(
                             child: Column(
@@ -127,7 +142,7 @@ class ServiceStation extends StatelessWidget {
                           ElevatedButton.icon(
                             onPressed: () {
                               // Handle Buy Products action
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProductListPage(),));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProductListPage(service_center_id: center.id??0,),));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,

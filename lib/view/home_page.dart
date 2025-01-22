@@ -1,16 +1,16 @@
 import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.dart';
 import 'package:ev_booking/view/evcharging_station_list.dart';
-import 'package:ev_booking/view/service_confirm.dart';
 import 'package:ev_booking/modules/service_center/page/service_station_list.dart';
-import 'package:ev_booking/view/user_profile.dart';
+import 'package:ev_booking/modules/user_profile/page/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fab_speed_dial/fab_speed_dial.dart';
 
 class UserHomePage extends StatefulWidget {
   const UserHomePage({super.key});
 
   @override
-  _UserHomePageState createState() => _UserHomePageState();
+  State<UserHomePage> createState() => _UserHomePageState();
 }
 
 class _UserHomePageState extends State<UserHomePage> {
@@ -35,6 +35,9 @@ class _UserHomePageState extends State<UserHomePage> {
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -49,7 +52,10 @@ class _UserHomePageState extends State<UserHomePage> {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color.fromARGB(255, 74, 203, 160), Color.fromARGB(255, 230, 244, 241)],
+                colors: [
+                  Color.fromARGB(255, 74, 203, 160),
+                  Color.fromARGB(255, 230, 244, 241),
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -133,7 +139,7 @@ class _UserHomePageState extends State<UserHomePage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ServiceStation()),
+                            MaterialPageRoute(builder: (context) => const ServiceStation()),
                           );
                         },
                       ),
@@ -150,65 +156,46 @@ class _UserHomePageState extends State<UserHomePage> {
                       ),
                     ],
                   ),
-                  FloatingActionButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const EVRegistrationForm()),
-                      );
-                    },
-                    tooltip: 'Add vehicle',
-                    backgroundColor: const Color.fromARGB(255, 248, 251, 251),
-                    child: const Icon(Icons.add, size: 30, color: Color(0xFF3AA17E)),
-                    
-                  ),
-                //floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-                  
                 ],
               ),
-              // Service Station Page
-              ServiceStation(),
-
-              // Charging Station Page
+              const ServiceStation(),
               EVChargingStationList(),
-
-              // Profile Page
               const ProfilePage(),
             ],
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+
+
+      // floatingActionButton
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const EVRegistrationForm()),
+          );
+        },
+        tooltip: 'Add vehicle',
+        backgroundColor: const Color.fromARGB(255, 248, 251, 251),
+        child: const Icon(Icons.add, size: 30, color: Color(0xFF3AA17E)),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      
+      
+      
+      //BottomNavigationBar
+        bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onBottomNavTapped,
         items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, size: 30),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.miscellaneous_services, size: 30),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.electrical_services, size: 30),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle, size: 30),
-            label: '',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home, size: 30), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.miscellaneous_services, size: 30), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.electrical_services, size: 30), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle, size: 30), label: ''),
         ],
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xFF3AA17E),
         unselectedItemColor: const Color.fromARGB(255, 20, 19, 19),
-        selectedLabelStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontSize: 14,
-        ),
       ),
     );
   }

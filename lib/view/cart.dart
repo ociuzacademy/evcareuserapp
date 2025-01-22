@@ -1,4 +1,4 @@
-import 'package:ev_booking/view/service_list.dart';
+import 'package:ev_booking/modules/service_list/page/service_list.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatelessWidget {

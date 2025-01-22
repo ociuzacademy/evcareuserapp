@@ -42,6 +42,7 @@ dependencies:
   flutter_custom_clippers: ^2.1.0
   carousel_slider: ^5.0.0
   http: ^1.2.2
+  fab_speed_dial: ^0.0.8
   
 
 dev_dependencies:
