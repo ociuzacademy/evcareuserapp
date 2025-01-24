@@ -21,6 +21,7 @@ class ServiceStation extends StatelessWidget {
       body: FutureBuilder<List<ServiceCentreModel>>(
         future: serviceCentreList(),
         builder: (context, snapshot) {
+         
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -130,7 +131,7 @@ class ServiceStation extends StatelessWidget {
                               // Handle Get Service Access action
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => const ServiceList()),
+                                MaterialPageRoute(builder: (context) => ServiceList(service_center_id: center.id??0,)),
                               );
                             },
                             style: ElevatedButton.styleFrom(

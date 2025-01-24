@@ -1,10 +1,13 @@
+import 'package:ev_booking/modules/login/pages/login_page.dart';
+import 'package:ev_booking/modules/purchase_history/page/purchase_history.dart';
+import 'package:ev_booking/modules/status_service/page/status_page.dart';
 import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.dart';
 import 'package:ev_booking/view/evcharging_station_list.dart';
 import 'package:ev_booking/modules/service_center/page/service_station_list.dart';
 import 'package:ev_booking/modules/user_profile/page/user_profile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fab_speed_dial/fab_speed_dial.dart';
 
 class UserHomePage extends StatefulWidget {
   const UserHomePage({super.key});
@@ -46,6 +49,89 @@ class _UserHomePageState extends State<UserHomePage> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: _currentIndex == 0
+          ? AppBar(
+              title: const Text("EV CARE"),
+              backgroundColor: const Color(0xFF3AA17E),
+            )
+          : null,
+      drawer: _currentIndex == 0
+          ? Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Color(0xFF3AA17E),
+                    ),
+                    child: Text(
+                      'Welcome to EV CARE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.add),
+                    title: const Text('Add Vehicle'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EVRegistrationForm(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.visibility),
+                    title: const Text('View Service Status'),
+                    onTap: () {
+                       Navigator.push( context,
+                      MaterialPageRoute(builder: (context) =>   const StatusView()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.history),
+                    title: const Text('View Purchase History'),
+                    onTap: () {
+                      // // Handle view purchase history action
+                      Navigator.push( context,
+                      MaterialPageRoute(builder: (context) =>   const PurchaseHistoryPage()),
+                      );
+                      
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.reviews_outlined),
+                    title: const Text('Add Feedback'),
+                    onTap: () {
+                      // // Handle view purchase history action
+                      // Navigator.pop(context);
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   const SnackBar(content: Text('View Purchase History tapped')),
+                      // );
+                    },
+                  ),
+                  const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text('Logout'),
+                    onTap: () {
+                     
+                       Navigator.pushReplacement( context,
+                      MaterialPageRoute(builder: (context) =>   const LoginPage()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            )
+          : null,
       body: Stack(
         children: [
           // Background gradient
@@ -165,26 +251,7 @@ class _UserHomePageState extends State<UserHomePage> {
           ),
         ],
       ),
-
-
-      // floatingActionButton
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const EVRegistrationForm()),
-          );
-        },
-        tooltip: 'Add vehicle',
-        backgroundColor: const Color.fromARGB(255, 248, 251, 251),
-        child: const Icon(Icons.add, size: 30, color: Color(0xFF3AA17E)),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      
-      
-      
-      //BottomNavigationBar
-        bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: _onBottomNavTapped,
         items: const [

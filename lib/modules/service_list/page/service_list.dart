@@ -1,7 +1,11 @@
+import 'package:ev_booking/modules/service_list/service/service_list_service.dart';
 import 'package:flutter/material.dart';
 
 class ServiceList extends StatefulWidget {
-  const ServiceList({super.key});
+  final int service_center_id;
+
+  const ServiceList({super.key,
+  required this.service_center_id});
 
   @override
   _ServiceListState createState() => _ServiceListState();
@@ -27,6 +31,7 @@ class _ServiceListState extends State<ServiceList> {
     selectedServices = List.filled(services.length, false);
   }
 
+
   void toggleSelection(int index) {
     setState(() {
       if (selectedServices[index]) {
@@ -38,22 +43,65 @@ class _ServiceListState extends State<ServiceList> {
     });
   }
 
-  void navigateToPaymentPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => PaymentPage(totalAmount: totalAmount),
-      ),
-    );
+
+
+  Future<void> _requestService() async {
+    List<Map<String, dynamic>> filteredServices = [];
+    for (int index = 0; index < services.length; index++) {
+      if (selectedServices[index]) {
+        filteredServices.add(services[index]);
+      }
+    }
+
+    if (filteredServices.isEmpty) return; 
+
+    try {
+      final int userId = int.parse("2"); 
+      final responseMessage = await serviceListRequestService(
+        //brand: "EV Brand", // Replace with actual brand if needed
+        user: userId,
+        service: filteredServices,
+        service_center_id : widget.service_center_id,
+
+
+      );
+
+      if (responseMessage.status == 'success') {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Service registered successfully')),
+          );
+          
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseMessage.message ?? "Unknown error")),
+          );
+        }
+      }
+    } catch (e) {
+      // Handle exceptions
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error occurred: $e')),
+      );
+    }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('EV Services'),
+      appBar:
+      
+       AppBar(
+        title: const Text('Services '),
         backgroundColor: const Color(0xFF3AA17E),
+        
       ),
+
+      
       body: Column(
         children: [
           Expanded(
@@ -88,7 +136,7 @@ class _ServiceListState extends State<ServiceList> {
             child: SizedBox(
               width: 200,
               child: ElevatedButton(
-                onPressed: totalAmount > 0 ? navigateToPaymentPage : null,
+                onPressed: totalAmount > 0 ? _requestService : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF3AA17E),
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -98,66 +146,13 @@ class _ServiceListState extends State<ServiceList> {
                 ),
                 child: Text(
                   'Continue (₹$totalAmount)',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ),
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class PaymentPage extends StatelessWidget {
-  final int totalAmount;
-
-  const PaymentPage({super.key, required this.totalAmount});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment'),
-        backgroundColor: const Color(0xFF3AA17E),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Total Amount: ₹$totalAmount',
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  // Add payment action here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Payment Successful!'),
-                    ),
-                  );
-                  //Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3AA17E),
-                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  'Pay Now',
-                  style: TextStyle(fontSize: 18,
-                  color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

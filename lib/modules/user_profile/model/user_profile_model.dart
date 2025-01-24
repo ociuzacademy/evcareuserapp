@@ -15,7 +15,7 @@ class UserProfileModel {
     String? phone;
     String? email;
     String? password;
-    dynamic image;
+    String? image;
 
     UserProfileModel({
         this.id,

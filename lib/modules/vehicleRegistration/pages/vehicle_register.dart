@@ -228,7 +228,7 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
                           ),
                         ),
                         onPressed: () {
-                          _vehicleRegistration(); // Wrap the method in an anonymous function
+                          _vehicleRegistration; // Wrap the method in an anonymous function
                         },
                         child: const Text(
                           'Register',

@@ -1,36 +1,35 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:ev_booking/modules/user_profile/model/user_profile_model.dart';
+import 'package:ev_booking/modules/service_payment/model/payment_response_model.dart';
+
+
 import 'package:http/http.dart' as http;
 
-Future<UserProfileModel>userProfileService(
-   {
-     required int user_id,
+Future<PaymentResponseModel> paymentServiceRespond(
+  {
+    required int  reairId,
   }
   
 ) async {
   try {
-
-    //final user_id =int.parse("2");
-
      Map<String, dynamic> params = {
-      'id': user_id.toString(),
+       'repair': reairId.toString(),
      };
-
-    final resp = await http.get(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_view_profile/').replace(queryParameters: params),
+    final resp = await http.patch(
+      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_update_status/').replace(queryParameters: params),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
     );
-    //final List<dynamic> decoded = jsonDecode(resp.body);
+    //final dynamic decoded = jsonDecode(resp.body);
     if (resp.statusCode == 200) {
 
       final dynamic decoded = jsonDecode(resp.body);
-      final response = UserProfileModel.fromJson(decoded);
+      final response = PaymentResponseModel.fromJson(decoded);
+          
       return response;
-      
-
+      // final response = decoded.map((item) => SingleProductListModel.fromJson(item)).toList();
+      // return response;
     } else {
       throw Exception('Failed to load response');
     }

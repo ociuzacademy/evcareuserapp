@@ -187,7 +187,19 @@ class _LoginPageState extends State<LoginPage> {
                   // Sign-up and Forgot Password links
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: [                    
+                      TextButton(
+                        onPressed: () {
+                          // Forgot password functionality
+                        },
+                        child: const Text(
+                          '',
+                          style: TextStyle(
+                            color: Color(0xFF176A4D),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -200,18 +212,6 @@ class _LoginPageState extends State<LoginPage> {
                         child: const 
                         Text(
                           'Sign Up',
-                          style: TextStyle(
-                            color: Color(0xFF176A4D),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // Forgot password functionality
-                        },
-                        child: const Text(
-                          'Forgot Password?',
                           style: TextStyle(
                             color: Color(0xFF176A4D),
                             fontWeight: FontWeight.bold,
