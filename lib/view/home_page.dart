@@ -106,17 +106,7 @@ class _UserHomePageState extends State<UserHomePage> {
                       
                     },
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.reviews_outlined),
-                    title: const Text('Add Feedback'),
-                    onTap: () {
-                      // // Handle view purchase history action
-                      // Navigator.pop(context);
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   const SnackBar(content: Text('View Purchase History tapped')),
-                      // );
-                    },
-                  ),
+                  
                   const Divider(),
                   ListTile(
                     leading: const Icon(Icons.logout),
