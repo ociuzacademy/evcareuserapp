@@ -1,3 +1,4 @@
+import 'package:ev_booking/modules/charging_station/model/charging_station_model.dart';
 import 'package:ev_booking/view/charging_station.dart';
 import 'package:ev_booking/view/single_charging_station.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,13 @@ class EVChargingStationList extends StatelessWidget {
         title: const Text('EV Charging Stations'),
         backgroundColor: const Color(0xFF3AA17E),
       ),
-      body: ListView.builder(
+      body:
+      // FutureBuilder<List<ChargingStationModel>>(
+      //   future:chargingStationList(),
+      //   builder: (context, snapshot) => ,
+      // )
+      
+       ListView.builder(
         itemCount: stations.length,
         itemBuilder: (context, index) {
           final station = stations[index];
@@ -143,6 +150,8 @@ class EVChargingStationList extends StatelessWidget {
           );
         },
       ),
+
+      //
     );
   }
 }

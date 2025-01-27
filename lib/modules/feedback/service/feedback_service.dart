@@ -22,7 +22,7 @@ Future<FeedbackModel> feedbackService({
     };
 
     final resp = await http.post(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user/feedback/'), 
+      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/feedback/'), 
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

@@ -56,7 +56,7 @@ class _StatusViewState extends State<StatusView> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ServicePaymentPage(service_id: service.id ?? 0),
+                        builder: (context) => ServicePaymentPage(repair_id: service.id ?? 0),
 
                       ),
                     );

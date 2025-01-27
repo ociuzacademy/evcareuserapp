@@ -2,7 +2,7 @@ import 'package:ev_booking/modules/login/pages/login_page.dart';
 import 'package:ev_booking/modules/purchase_history/page/purchase_history.dart';
 import 'package:ev_booking/modules/status_service/page/status_page.dart';
 import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.dart';
-import 'package:ev_booking/view/evcharging_station_list.dart';
+import 'package:ev_booking/modules/charging_station/page/evcharging_station_list.dart';
 import 'package:ev_booking/modules/service_center/page/service_station_list.dart';
 import 'package:ev_booking/modules/user_profile/page/user_profile.dart';
 

@@ -5,9 +5,9 @@ import 'package:ev_booking/modules/service_payment/service/payment_service.dart'
 import 'package:ev_booking/modules/service_payment/service/status_respond.dart';
 
 class ServicePaymentPage extends StatelessWidget {
-  final int service_id;
+  final int repair_id;
 
-  const ServicePaymentPage({super.key, required this.service_id});
+  const ServicePaymentPage({super.key, required this.repair_id});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ServicePaymentPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder<SingleRepairModel>(
-          future: paymentService(reairId: service_id.toString()),
+          future: paymentService(reairId: repair_id.toString()),
           builder: (context, snapshot) {
             // Waiting state
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -106,6 +106,8 @@ class ServicePaymentPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
+               if(repair.status != "Feedback Submitted")
+               
                 // Conditional Button
                 ElevatedButton(
                   onPressed: repair.status == "Repair Completed"
@@ -122,14 +124,7 @@ class ServicePaymentPage extends StatelessWidget {
                               );
                               Navigator.pop(context);
                             } 
-                            // else {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //     SnackBar(
-                            //       content: Text(responseMessage.message ??
-                            //           "Unknown error"),
-                            //     ),
-                            //   );
-                            // }
+                            
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -144,7 +139,8 @@ class ServicePaymentPage extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      FeedbackPage(serviceId: service_id,repairId:repair.id!),
+                                      //FeedbackPage(serviceId: reair_id,repairId:repair!),
+                                      FeedbackPage(serviceId: repair.serviceCentre!, repairId: repair_id)
                                 ),
                               );
                             }
@@ -170,6 +166,11 @@ class ServicePaymentPage extends StatelessWidget {
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
+
+                
+
+
+
               ],
             );
           },

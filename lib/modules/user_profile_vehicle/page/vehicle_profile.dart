@@ -1,19 +1,19 @@
-import 'package:ev_booking/modules/user_profile/service/user_profile_service.dart';
-import 'package:ev_booking/modules/user_profile_vehicle/page/vehicle_profile.dart';
+
+import 'package:ev_booking/modules/user_profile_vehicle/service/vehicle_profile_service.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class VehicleProfilePage extends StatelessWidget {
+  const VehicleProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Vehicle Details '),
         backgroundColor: const Color(0xFF3AA17E),
       ),
       body: FutureBuilder(
-        future: userProfileService(user_id: 2), 
+        future: vevicleProfileService(user_id: 2), 
         builder: (context, snapshot) {
           
 
@@ -45,7 +45,7 @@ class ProfilePage extends StatelessWidget {
 
 
           // Extract data
-          final userProfile = snapshot.data!;
+          final vehicle = snapshot.data!;
 
           //final services = snapshot.data!;
 
@@ -60,37 +60,15 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 _buildProfileCard([
-                  _buildProfileRow("Name", userProfile.name!),
-                  _buildProfileRow("Username", userProfile.username! ?? "N/A"),
-                  _buildProfileRow("Phone", userProfile.phone ?? "N/A"),
-                  _buildProfileRow("Email", userProfile.email ?? "N/A"),
-                ]),
+                _buildProfileRow("Brand", vehicle.brand!),
+                _buildProfileRow("Model", vehicle.model!),
+                _buildProfileRow("VIN", vehicle.vin!),
+                _buildProfileRow("Registration Number", vehicle.registrationNum!),
+              ]),
+
                 const SizedBox(height: 20),
               
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Add logic to handle API calls or edit functionality
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const VehicleProfilePage(),));
-                      
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF3AA17E),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text(
-                      "Vehicle Details",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
+          
               ],
             ),
           );

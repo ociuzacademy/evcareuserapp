@@ -14,6 +14,7 @@ class SingleRepairModel {
     String? status;
     String? repairCost;
     int? id;
+    int? serviceCentre;
 
     SingleRepairModel({
         this.serviceName,
@@ -21,6 +22,7 @@ class SingleRepairModel {
         this.status,
         this.repairCost,
         this.id,
+        this.serviceCentre,
     });
 
     factory SingleRepairModel.fromJson(Map<String, dynamic> json) => SingleRepairModel(
@@ -29,6 +31,7 @@ class SingleRepairModel {
         status: json["status"],
         repairCost: json["repair_cost"],
         id: json["id"],
+        serviceCentre: json["service_centre"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -37,6 +40,7 @@ class SingleRepairModel {
         "status": status,
         "repair_cost": repairCost,
         "id": id,
+        "service_centre": serviceCentre,
     };
 }
 

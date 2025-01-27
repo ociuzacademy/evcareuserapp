@@ -8,6 +8,8 @@ class UserUrl {
   static const String simpleRepairRequestUrl = "https://vqp6fbbv-8001.inc1.devtunnels.ms/user/view_single_repair_request/";// repaire request 
   static const String simpleRepairRequestResponseUrl = "https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_update_status/";// repaire request 
   static const String qq = "https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_update_status/";
-  
+  //
+
+  static const String chargingStationUrl = "$baseUrl/view_ev_stations/";
   
 }

@@ -1,7 +1,7 @@
 
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:ev_booking/view/evcharging_station_list.dart';
+import 'package:ev_booking/modules/charging_station/page/evcharging_station_list.dart';
 import 'package:ev_booking/view/home_page.dart';
 import 'package:ev_booking/view/intro_screen.dart';
 import 'package:ev_booking/modules/login/pages/login_page.dart';
