@@ -13,7 +13,7 @@ class VehicleProfilePage extends StatelessWidget {
         backgroundColor: const Color(0xFF3AA17E),
       ),
       body: FutureBuilder(
-        future: vevicleProfileService(user_id: 2), 
+        future: vehicleProfileService(user_id: 2), 
         builder: (context, snapshot) {
           
 

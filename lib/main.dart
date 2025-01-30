@@ -10,6 +10,7 @@ import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.da
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
           fit: BoxFit.cover, // Adjust how the image fits its container
          // color: Colors.green, // Apply a tint color with transparency
           alignment: Alignment.center, // Align the image within its container
+          
         ),
 
         splashTransition: SplashTransition.scaleTransition,

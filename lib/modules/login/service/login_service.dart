@@ -17,7 +17,7 @@ Future<LoginResponseModel> UserLogin({
     };
 
     final resp = await http.post(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/login/'), 
+      Uri.parse(UserUrl.loginUrl), 
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

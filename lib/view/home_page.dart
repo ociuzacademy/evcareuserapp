@@ -5,6 +5,7 @@ import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.da
 import 'package:ev_booking/modules/charging_station/page/evcharging_station_list.dart';
 import 'package:ev_booking/modules/service_center/page/service_station_list.dart';
 import 'package:ev_booking/modules/user_profile/page/user_profile.dart';
+import 'package:ev_booking/modules/view_charging_status/page/charging_status_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -92,6 +93,15 @@ class _UserHomePageState extends State<UserHomePage> {
                     onTap: () {
                        Navigator.push( context,
                       MaterialPageRoute(builder: (context) =>   const StatusView()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.charging_station_outlined),
+                    title: const Text('View Charging Status'),
+                    onTap: () {
+                       Navigator.push( context,
+                      MaterialPageRoute(builder: (context) =>   const ChargingStatusViews()),
                       );
                     },
                   ),
@@ -226,7 +236,7 @@ class _UserHomePageState extends State<UserHomePage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => EVChargingStationList()),
+                            MaterialPageRoute(builder: (context) => const EVChargingStationList()),
                           );
                         },
                       ),
@@ -235,7 +245,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 ],
               ),
               const ServiceStation(),
-              EVChargingStationList(),
+              const EVChargingStationList(),
               const ProfilePage(),
             ],
           ),

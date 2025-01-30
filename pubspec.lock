@@ -73,14 +73,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  fab_speed_dial:
-    dependency: "direct main"
-    description:
-      name: fab_speed_dial
-      sha256: b07198531eeac5bb722cd7a942980d29e439b3bbaed42527ccfa5f67551181a9
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.8"
   fake_async:
     dependency: transitive
     description:

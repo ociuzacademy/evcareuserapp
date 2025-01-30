@@ -4,9 +4,9 @@
 
 import 'dart:convert';
 
-List<VehicleProfileModel> vehicleProfileModelFromJson(String str) => List<VehicleProfileModel>.from(json.decode(str).map((x) => VehicleProfileModel.fromJson(x)));
+VehicleProfileModel vehicleProfileModelFromJson(String str) => VehicleProfileModel.fromJson(json.decode(str));
 
-String vehicleProfileModelToJson(List<VehicleProfileModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String vehicleProfileModelToJson(VehicleProfileModel data) => json.encode(data.toJson());
 
 class VehicleProfileModel {
     int? id;

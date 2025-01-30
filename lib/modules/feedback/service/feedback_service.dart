@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/feedback/model/feedback.dart';
-import 'package:ev_booking/modules/vehicleRegistration/model/vehicle_register_model.dart';
+
 
 import 'package:http/http.dart' as http;
 

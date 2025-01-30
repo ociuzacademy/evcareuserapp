@@ -1,25 +1,26 @@
 import 'package:ev_booking/modules/service_payment/page/payment.dart';
 import 'package:ev_booking/modules/status_service/model/status_service_model.dart';
-import 'package:ev_booking/modules/status_service/service/status_service.dart';
+
+
 import 'package:flutter/material.dart';
 
-class StatusView extends StatefulWidget {
-  const StatusView({super.key});
+class ChargingStatusViews extends StatefulWidget {
+  const ChargingStatusViews({super.key});
 
   @override
-  _StatusViewState createState() => _StatusViewState();
+  _ChargingStatusViewsState createState() => _ChargingStatusViewsState();
 }
 
-class _StatusViewState extends State<StatusView> {
+class _ChargingStatusViewsState extends State<ChargingStatusViews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Service Status History'),
+        title: const Text('Charging Status History'),
         backgroundColor: const Color(0xFF3AA17E),
       ),
       body: FutureBuilder<List<ServiceStatusModel>>(
-        future: serviceCenterStatusService(user_id: 2), // Replace with actual API call
+        future: chargingStationStatusService(user_id: 2), 
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -114,51 +115,3 @@ class _StatusViewState extends State<StatusView> {
   }
 }
 
-// class ServiceDetailsPage extends StatelessWidget {
-//   final ServiceStatusModel service;
-
-//   const ServiceDetailsPage({super.key, required this.service});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(service.serviceName!),
-//         backgroundColor: const Color(0xFF3AA17E),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             const Text(
-//               'Service Details',
-//               style: TextStyle(
-//                 fontWeight: FontWeight.bold,
-//                 fontSize: 18,
-//               ),
-//             ),
-//             const SizedBox(height: 10),
-//             Text(
-//               'Repair Cost: ₹${service.repairCost!}',
-//               style: const TextStyle(
-//                 fontSize: 16,
-//                 fontWeight: FontWeight.w500,
-//               ),
-//             ),
-//             const SizedBox(height: 10),
-//             const Text(
-//               'Services Included:',
-//               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-//             ),
-//             const SizedBox(height: 8),
-//             ...service.services.map((item) => Padding(
-//                   padding: const EdgeInsets.only(left: 8.0, top: 4.0),
-//                   child: Text('- $item'),
-//                 )),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

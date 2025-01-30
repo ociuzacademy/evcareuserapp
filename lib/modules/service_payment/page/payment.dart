@@ -106,71 +106,69 @@ class ServicePaymentPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-               if(repair.status != "Feedback Submitted")
-               
                 // Conditional Button
-                ElevatedButton(
-                  onPressed: repair.status == "Repair Completed"
-                      ? () async {
-                          try {
-                            final responseMessage = await paymentServiceRespond(
-                              reairId: repair.id!,
-                            );
+                repair.status != "Feedback Submitted"
+                    ? ElevatedButton(
+                        onPressed: repair.status == "Repair Completed"
+                            ? () async {
+                                try {
+                                  final responseMessage =
+                                      await paymentServiceRespond(
+                                    reairId: repair.id!,
+                                  );
 
-                            if (responseMessage.status == 'success') {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Payment Successful')),
-                              );
-                              Navigator.pop(context);
-                            } 
-                            
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Payment failed: $e'),
-                              ),
-                            );
-                          }
-                        }
-                      : (repair.status == "Vehicle Delivered"
-                          ? () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      //FeedbackPage(serviceId: reair_id,repairId:repair!),
-                                      FeedbackPage(serviceId: repair.serviceCentre!, repairId: repair_id)
-                                ),
-                              );
-                            }
-                          : null),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: repair.status == "Repair Completed"
-                        ? const Color(0xFF3AA17E)
-                        : (repair.status == "Vehicle Delivered"
-                            ? Colors.blue
-                            : Colors.grey),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: Text(
-                    repair.status == "Repair Completed"
-                        ? 'Make Payment'
-                        : (repair.status == "Vehicle Delivered"
-                            ? 'Give Feedback'
-                            : 'Unavailable'),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-
-                
-
-
-
+                                  if (responseMessage.status == 'success') {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content:
+                                              Text('Payment Successful')),
+                                    );
+                                    Navigator.pop(context);
+                                  }
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Payment failed: $e'),
+                                    ),
+                                  );
+                                }
+                              }
+                            : (repair.status == "Vehicle Delivered"
+                                ? () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => FeedbackPage(
+                                          serviceId: repair.serviceCentre!,
+                                          repairId: repair_id,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                : null),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              repair.status == "Repair Completed"
+                                  ? const Color(0xFF3AA17E)
+                                  : (repair.status == "Vehicle Delivered"
+                                      ? Colors.blue
+                                      : Colors.grey),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Text(
+                          repair.status == "Repair Completed"
+                              ? 'Make Payment'
+                              : (repair.status == "Vehicle Delivered"
+                                  ? 'Give Feedback'
+                                  : 'Unavailable'),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ],
             );
           },
@@ -195,4 +193,3 @@ class ServicePaymentPage extends StatelessWidget {
     }
   }
 }
-

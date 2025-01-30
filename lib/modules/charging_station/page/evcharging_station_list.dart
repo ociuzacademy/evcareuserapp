@@ -1,159 +1,186 @@
 import 'package:ev_booking/modules/charging_station/model/charging_station_model.dart';
-import 'package:ev_booking/view/charging_station.dart';
-import 'package:ev_booking/view/single_charging_station.dart';
+import 'package:ev_booking/modules/charging_station/service/charging_station_service.dart';
+import 'package:ev_booking/modules/charging_station_single/page/charging_station.dart';
 import 'package:flutter/material.dart';
 
 class EVChargingStationList extends StatelessWidget {
-  final List<Map<String, dynamic>> stations = [
-    {
-      "image": "assets/logo/carouselImage1.jpg",
-      "name": "FastCharge EV Station",
-      "address": "123 Greenway Drive, Springfield",
-      "time": "24/7",
-      "connectors": "Type 2, CCS, CHAdeMO",
-      "rate": "₹5/min",
-      "capacity": "150 kW"
-    },
-    {
-      "image": "assets/logo/CarouselImage2.jpg",
-      "name": "EcoCharge Hub",
-      "address": "456 Elm Street, Greenville",
-      "time": "6:00 AM - 10:00 PM",
-      "connectors": "Type 2, CCS",
-      "rate": "₹4/min",
-      "capacity": "120 kW"
-    },
-    {
-      "image": "assets/logo/CarouselImage3.jpg",
-      "name": "PowerUp Station",
-      "address": "789 Maple Avenue, Rivertown",
-      "time": "8:00 AM - 8:00 PM",
-      "connectors": "CHAdeMO, CCS",
-      "rate": "₹6/min",
-      "capacity": "100 kW"
-    },
-  ];
-
-  EVChargingStationList({super.key});
+  const EVChargingStationList({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final chargingStationId;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('EV Charging Stations'),
         backgroundColor: const Color(0xFF3AA17E),
       ),
-      body:
-      // FutureBuilder<List<ChargingStationModel>>(
-      //   future:chargingStationList(),
-      //   builder: (context, snapshot) => ,
-      // )
+      body: 
       
-       ListView.builder(
-        itemCount: stations.length,
-        itemBuilder: (context, index) {
-          final station = stations[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) =>  const ServiceStationBookingPage()),
+      FutureBuilder<List<ChargingStationModel>>(
+        future: chargingStationList(),
+        builder: (context, snapshot) {
+
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-            },
-            child: Card(
-              margin: const EdgeInsets.all(10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              elevation: 5,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          }
+
+          // Error State
+          if (snapshot.hasError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                    ),
-                    child: Image.asset(
-                      station["image"],
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    ),
+                  Image.asset(
+                    'assets/logo/error.jpg',
+                    width: size.width * 0.6,
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            station["name"],
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            station["address"],
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              const Icon(Icons.access_time, size: 16, color: Colors.grey),
-                              const SizedBox(width: 5),
-                              Text(
-                                station["time"],
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "Connectors: ${station["connectors"]}",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Text(
-                                "Rate: ${station["rate"]}",
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF3AA17E),
-                                ),
-                              ),
-                              const SizedBox(width: 20,),
-                              Text(
-                                "Capacity: ${station["capacity"]}",
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                  Text(
+                    "Error: ${snapshot.error}",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
-            ),
+            );
+          }
+
+          // Empty Response
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(
+              child: Text("No service found"),
+            );
+          }
+
+          final stations = snapshot.data!;
+
+          return ListView.builder(
+            itemCount: stations.length,
+            itemBuilder: (context, index) {
+              final station = stations[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>  ServiceStationBookingPage(charging_station_id:station.id.toString()),//ServiceStationBookingPage(charging_station_id:station.id.toString()),
+                    ),
+                  );
+                },
+                child: Card(
+                  margin: const EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 5,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
+                    
+                        child: Image.network(
+                          "https://vqp6fbbv-8001.inc1.devtunnels.ms/${station.image}" ?? 'assets/icons/image.png',
+                          width: size.width * 0.2,
+                          height: size.width * 0.2,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/icons/image.png',
+                              width: size.width * 0.2,
+                              height: size.width * 0.2,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                     
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                station.name!,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(
+                                station.address!,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.access_time,
+                                    size: 16,
+                                    color: Colors.grey,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    station.workingHours!,
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                "Connectors: ${station.connectors!.join(', ')}",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Rate: ${station.ratePerMinute!}/ hour",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF3AA17E),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Text(
+                                    "Capacity: ${station.capacity!} kW",
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           );
         },
       ),
-
-      //
     );
   }
 }
-
-

@@ -4,6 +4,9 @@ import 'package:ev_booking/modules/signup/pages/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:ev_booking/constants/urls.dart';
 
+bool _isLoading = false; // To manage loading state
+
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,6 +31,11 @@ class _LoginPageState extends State<LoginPage> {
   // Function to handle form submission
   Future<void> _loginUser() async {
     if (_formKey.currentState?.validate() == true) {
+
+       setState(() {
+        _isLoading = true; // Start loading
+      });
+
       try {
         final responseMessage = await UserLogin(
           username: _usernameController.text.trim(),
@@ -61,6 +69,11 @@ class _LoginPageState extends State<LoginPage> {
             SnackBar(content: Text('Login failed: $e')),
           );
         }
+      }
+      finally {
+        setState(() {
+          _isLoading = false; // Stop loading
+        });
       }
     }
   }
@@ -161,27 +174,35 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  // Login button
+                 
+                   // Login button with CircularProgressIndicator
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF176A4D),
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        elevation: 5,
-                      ),
-                      onPressed: _loginUser,
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xFF176A4D)),
+                            ),
+                          )
+                        : ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF176A4D),
+                              padding: const EdgeInsets.symmetric(vertical: 16.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              elevation: 5,
+                            ),
+                            onPressed: _loginUser,
+                            child: const Text(
+                              'Login',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                   ),
                   const SizedBox(height: 20),
                   // Sign-up and Forgot Password links
