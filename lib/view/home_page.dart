@@ -5,7 +5,8 @@ import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.da
 import 'package:ev_booking/modules/charging_station/page/evcharging_station_list.dart';
 import 'package:ev_booking/modules/service_center/page/service_station_list.dart';
 import 'package:ev_booking/modules/user_profile/page/user_profile.dart';
-import 'package:ev_booking/modules/view_charging_status/page/charging_status_view.dart';
+import 'package:ev_booking/modules/view_charging_history/page/charging_status_view.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';

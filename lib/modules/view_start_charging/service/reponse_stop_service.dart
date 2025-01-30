@@ -1,27 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
-
-
 import 'package:ev_booking/constants/urls.dart';
+import 'package:ev_booking/modules/view_start_charging/model/response_start_model.dart';
 
-import 'package:ev_booking/modules/single_product/model/product_purchase_response_model.dart';
 import 'package:http/http.dart' as http;
 
-Future<ProductPurchaseResponseModel> buyProductService({
-  required String user_id,
-  required String product_id,
-  required int quantity,
+Future<ResponseStatusModel> stopChargingService({
+  required String bookingHistoryId,
+  
+ 
 
 }) async {
   try {
     Map<String, dynamic> param = {
-     "user":user_id,
-      "product": product_id,
-      "quantity": quantity,
+     "id":bookingHistoryId,
+     
     };
 
-    final resp = await http.post(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/buy_product/'), 
+    final resp = await http.patch(
+      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/stop_charging/'), 
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
@@ -32,7 +29,7 @@ Future<ProductPurchaseResponseModel> buyProductService({
       
 
       final dynamic decoded = jsonDecode(resp.body);
-      final response = ProductPurchaseResponseModel.fromJson(decoded);
+      final response = ResponseStatusModel.fromJson(decoded);
           
       return response;
     } else {

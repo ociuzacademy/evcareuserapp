@@ -27,10 +27,16 @@ class _StatusViewState extends State<StatusView> {
             );
           }
 
+          
           // Error State
           if (snapshot.hasError) {
             return Center(
-              child: Text("Error: ${snapshot.error}"),
+              child: Column(
+                children: [
+                  Image.asset('assets/logo/error.jpg'),
+                  Text("Error: ${snapshot.error}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                ],
+              ),
             );
           }
 

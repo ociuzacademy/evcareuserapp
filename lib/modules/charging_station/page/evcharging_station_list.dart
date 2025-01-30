@@ -155,7 +155,7 @@ class EVChargingStationList extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    "Rate: ${station.ratePerMinute!}/ hour",
+                                    "Rate: ${station.ratePerMinute}/ hour",
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
