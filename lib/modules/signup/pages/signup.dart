@@ -1,6 +1,5 @@
 import 'package:ev_booking/modules/login/pages/login_page.dart';
 import 'package:ev_booking/modules/signup/services/signup_service.dart';
-import 'package:ev_booking/view/home_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -19,7 +18,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
@@ -52,10 +52,10 @@ class _RegisterPageState extends State<RegisterPage> {
           SnackBar(content: Text(responseMessage)),
         );
 
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const LoginPage (),
+            builder: (context) => const LoginPage(),
           ),
         );
       } catch (e) {
@@ -207,7 +207,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       isPasswordVisible: _isConfirmPasswordVisible,
                       onPasswordToggle: () {
                         setState(() {
-                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                          _isConfirmPasswordVisible =
+                              !_isConfirmPasswordVisible;
                         });
                       },
                       validator: (value) {
@@ -245,29 +246,28 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     Row(
-                    mainAxisAlignment: MainAxisAlignment.end, 
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginPage(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Login?',
+                            style: TextStyle(
+                              color: Color(0xFF176A4D),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17,
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'Login?',
-                          style: TextStyle(
-                            color: Color(0xFF176A4D), 
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -302,7 +302,8 @@ class _RegisterPageState extends State<RegisterPage> {
           borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: const BorderSide(color: Color(0xFF176A4D), width: 2.0),

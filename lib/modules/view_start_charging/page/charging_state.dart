@@ -3,6 +3,7 @@ import 'package:ev_booking/modules/view_start_charging/service/charging_state_se
 import 'package:ev_booking/modules/view_start_charging/service/reponse_stop_service.dart';
 import 'package:ev_booking/modules/view_start_charging/service/response_start_state.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class BillPage extends StatefulWidget {
   final int booking_history_id;
@@ -13,9 +14,6 @@ class BillPage extends StatefulWidget {
 }
 
 class _BillPageState extends State<BillPage> {
-
-
-
   // void _startCharging() {
   //   ScaffoldMessenger.of(context).showSnackBar(
   //     const SnackBar(content: Text("Charging Started")),
@@ -28,85 +26,75 @@ class _BillPageState extends State<BillPage> {
   //   );
   // }
 
-
-    Future<void> _startCharging()async{
+  Future<void> _startCharging() async {
     try {
-        final responseMessage = await startChargingService(
-         bookingHistoryId: widget.booking_history_id.toString(),
+      final responseMessage = await startChargingService(
+        bookingHistoryId: widget.booking_history_id.toString(),
+      );
+      // print(responseMessage);
 
-        );
-       // print(responseMessage);
-
-        if (responseMessage.status == 'success') {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Start Charging')),
-            );
-            Navigator.pop(
-              context,
-              
-            );
-
-            
-          }
-         
-        } else {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(responseMessage.message??"Unkown error")),
-            );
-          }
-        }
-      } catch (e) {
+      if (responseMessage.status == 'success') {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(' Failed to charge : $e')),
+            const SnackBar(content: Text('Start Charging')),
+          );
+          Navigator.pop(
+            context,
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseMessage.message ?? "Unkown error")),
           );
         }
       }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(' Failed to charge : $e')),
+        );
+      }
+    }
   }
 
-  Future<void> _endCharging()async{
+  Future<void> _endCharging() async {
     try {
-        final responseMessage = await stopChargingService(
-           bookingHistoryId: widget.booking_history_id.toString(),
+      final responseMessage = await stopChargingService(
+        bookingHistoryId: widget.booking_history_id.toString(),
+      );
+      // print(responseMessage);
 
-        );
-       // print(responseMessage);
-
-        if (responseMessage.status == 'success') {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('stop Charging')),
-            );
-            Navigator.pop(
-              context,
-              
-            );
-          }
-         
-        } else {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(responseMessage.message??"Unkown error")),
-            );
-          }
-        }
-      } catch (e) {
+      if (responseMessage.status == 'success') {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(' Failed to stop : $e')),
+            const SnackBar(content: Text('stop Charging')),
+          );
+          Navigator.pop(
+            context,
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseMessage.message ?? "Unkown error")),
           );
         }
       }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(' Failed to stop : $e')),
+        );
+      }
+    }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
+    final dateFormat = DateFormat("dd/MM/yyyy");
 
     return Scaffold(
       appBar: AppBar(
@@ -134,7 +122,8 @@ class _BillPageState extends State<BillPage> {
                   Image.asset('assets/logo/error.jpg'),
                   Text(
                     "Error: ${snapshot.error}",
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -207,7 +196,7 @@ class _BillPageState extends State<BillPage> {
                             const Icon(Icons.timer, color: Colors.grey),
                             SizedBox(width: screenWidth * 0.02),
                             Text(
-                              "Date: ${item.bookingDate ?? 0}",
+                              "Date: ${dateFormat.format(item.bookingDate ?? DateTime.now())}",
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.black87,
@@ -236,51 +225,55 @@ class _BillPageState extends State<BillPage> {
 
                         // Buttons
                         Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                            onPressed: (item.chargingStatus == "Charging Started" || 
-                                        item.chargingStatus == "Charging Completed")
-                                ? null // Disable button
-                                : _startCharging, // Enable button only if status allows
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF3AA17E),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.05,
-                                vertical: screenHeight * 0.015,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ElevatedButton(
+                              onPressed: (item.chargingStatus ==
+                                          "Charging Started" ||
+                                      item.chargingStatus ==
+                                          "Charging Completed")
+                                  ? null // Disable button
+                                  : _startCharging, // Enable button only if status allows
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF3AA17E),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.05,
+                                  vertical: screenHeight * 0.015,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            child: const Text(
-                              "Charging Started",
-                              style: TextStyle(fontSize: 14, color: Colors.white),
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: (item.chargingStatus == "pending" || 
-                                        item.chargingStatus == "Charging Completed")
-                                ? null // Disable button
-                                : _endCharging, // Enable button only if status allows
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFDC3545),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.05,
-                                vertical: screenHeight * 0.015,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                              child: const Text(
+                                "Charging Started",
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
                               ),
                             ),
-                            child: const Text(
-                              "Charging Ended",
-                              style: TextStyle(fontSize: 14, color: Colors.white),
+                            ElevatedButton(
+                              onPressed: (item.chargingStatus == "pending" ||
+                                      item.chargingStatus ==
+                                          "Charging Completed")
+                                  ? null // Disable button
+                                  : _endCharging, // Enable button only if status allows
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFDC3545),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.05,
+                                  vertical: screenHeight * 0.015,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: const Text(
+                                "Charging Ended",
+                                style: TextStyle(
+                                    fontSize: 14, color: Colors.white),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-
+                          ],
+                        ),
                       ],
                     ),
                   ),

@@ -1,27 +1,24 @@
 import 'dart:convert';
 import 'dart:io';
 
-
-import 'package:ev_booking/constants/urls.dart';
-
 import 'package:ev_booking/modules/single_product/model/product_purchase_response_model.dart';
+import 'package:ev_booking/utils/preference_values.dart';
 import 'package:http/http.dart' as http;
 
 Future<ProductPurchaseResponseModel> buyProductService({
-  required String user_id,
   required String product_id,
   required int quantity,
-
 }) async {
   try {
+    String userId = await PreferenceValues.getUserId();
     Map<String, dynamic> param = {
-     "user":user_id,
+      "user": userId,
       "product": product_id,
       "quantity": quantity,
     };
 
     final resp = await http.post(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/buy_product/'), 
+      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/buy_product/'),
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
@@ -29,11 +26,9 @@ Future<ProductPurchaseResponseModel> buyProductService({
     );
 
     if (resp.statusCode == 200) {
-      
-
       final dynamic decoded = jsonDecode(resp.body);
       final response = ProductPurchaseResponseModel.fromJson(decoded);
-          
+
       return response;
     } else {
       final Map<String, dynamic> errorResponse = jsonDecode(resp.body);

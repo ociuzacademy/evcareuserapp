@@ -13,10 +13,8 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: const Color(0xFF3AA17E),
       ),
       body: FutureBuilder(
-        future: userProfileService(user_id: 2), 
+        future: userProfileService(),
         builder: (context, snapshot) {
-          
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -29,12 +27,15 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset('assets/logo/error.jpg'),
-                  Text("Error: ${snapshot.error}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  Text(
+                    "Error: ${snapshot.error}",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             );
           }
-
 
           // Empty Response data array
           // if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -42,7 +43,6 @@ class ProfilePage extends StatelessWidget {
           //     child: Text("No service found"),
           //   );
           // }
-
 
           // Extract data
           final userProfile = snapshot.data!;
@@ -61,18 +61,20 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(height: 10),
                 _buildProfileCard([
                   _buildProfileRow("Name", userProfile.name!),
-                  _buildProfileRow("Username", userProfile.username! ?? "N/A"),
+                  _buildProfileRow("Username", userProfile.username!),
                   _buildProfileRow("Phone", userProfile.phone ?? "N/A"),
                   _buildProfileRow("Email", userProfile.email ?? "N/A"),
                 ]),
                 const SizedBox(height: 20),
-              
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
                       // Add logic to handle API calls or edit functionality
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const VehicleProfilePage(),));
-                      
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const VehicleProfilePage(),
+                          ));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF3AA17E),

@@ -9,20 +9,16 @@ class EVChargingStationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final chargingStationId;
+    // final chargingStationId;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('EV Charging Stations'),
         backgroundColor: const Color(0xFF3AA17E),
       ),
-      body: 
-      
-      FutureBuilder<List<ChargingStationModel>>(
+      body: FutureBuilder<List<ChargingStationModel>>(
         future: chargingStationList(),
         builder: (context, snapshot) {
-
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -70,7 +66,9 @@ class EVChargingStationList extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>  ServiceStationBookingPage(charging_station_id:station.id.toString()),//ServiceStationBookingPage(charging_station_id:station.id.toString()),
+                      builder: (context) => ServiceStationBookingPage(
+                          charging_station_id: station.id
+                              .toString()), //ServiceStationBookingPage(charging_station_id:station.id.toString()),
                     ),
                   );
                 },
@@ -88,9 +86,8 @@ class EVChargingStationList extends StatelessWidget {
                           topLeft: Radius.circular(10),
                           bottomLeft: Radius.circular(10),
                         ),
-                    
                         child: Image.network(
-                          "https://vqp6fbbv-8001.inc1.devtunnels.ms/${station.image}" ?? 'assets/icons/image.png',
+                          "https://vqp6fbbv-8001.inc1.devtunnels.ms/${station.image}",
                           width: size.width * 0.2,
                           height: size.width * 0.2,
                           fit: BoxFit.cover,
@@ -105,7 +102,6 @@ class EVChargingStationList extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                     
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -150,12 +146,11 @@ class EVChargingStationList extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-
                               const SizedBox(height: 10),
                               Row(
                                 children: [
                                   Text(
-                                    "Rate: ${station.ratePerMinute}/ hour",
+                                    "Rate: ${station.ratePerSlot}/ hour",
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,

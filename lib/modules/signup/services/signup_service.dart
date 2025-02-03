@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-
-import 'package:ev_booking/constants/urls.dart';
 import 'package:http/http.dart' as http;
 
 Future<String> UserRegistration({
@@ -22,14 +20,14 @@ Future<String> UserRegistration({
     };
 
     final response = await http.post(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_register/'), 
+      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_register/'),
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return "Registration successful";
     } else {
       final Map<String, dynamic> errorResponse = jsonDecode(response.body);

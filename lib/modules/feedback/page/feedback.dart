@@ -28,12 +28,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Future<void> submitFeedback() async {
     if (formKey.currentState!.validate()) {
       final feedbackText = feedbackController.text.trim();
-      const int userId = 2; // Hardcoded user ID for testing purposes
 
       try {
         final responseMessage = await feedbackService(
           feedback: feedbackText,
-          user: userId.toString(),
           service_id: widget.serviceId.toString(),
           repair_id: widget.repairId.toString(),
         );
@@ -110,7 +108,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   onPressed: submitFeedback,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF3AA17E),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

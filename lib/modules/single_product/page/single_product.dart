@@ -1,4 +1,3 @@
-import 'package:ev_booking/modules/products/model/productlist.dart';
 import 'package:ev_booking/modules/single_product/service/buy_product_service.dart';
 import 'package:ev_booking/modules/single_product/service/single_product_service.dart';
 import 'package:flutter/material.dart';
@@ -25,47 +24,45 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     singleProductFuture = singleProductList(product_id: widget.product_id);
   }
 
-  Future<void> _buyProduct()async{
+  Future<void> _buyProduct() async {
     try {
-        final responseMessage = await buyProductService(
-          user_id:"2",
-         product_id: widget.product_id,
-         quantity: quantity,
-        );
-       // print(responseMessage);
+      final responseMessage = await buyProductService(
+        product_id: widget.product_id,
+        quantity: quantity,
+      );
+      // print(responseMessage);
 
-        if (responseMessage.status == 'success') {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Product Purchased')),
-            );
-            Navigator.pop(
-              context,
-              
-            );
-          }
-         
-        } else {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(responseMessage.message??"Unkown error")),
-            );
-          }
-        }
-      } catch (e) {
+      if (responseMessage.status == 'success') {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Product purchase failed: $e')),
+            const SnackBar(content: Text('Product Purchased')),
+          );
+          Navigator.pop(
+            context,
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(responseMessage.message ?? "Unkown error")),
           );
         }
       }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Product purchase failed: $e')),
+        );
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Details', style: TextStyle(color: Colors.white)),
+        title: const Text('Product Details',
+            style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF3AA17E),
         elevation: 0,
       ),
@@ -82,7 +79,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 children: [
                   Image.asset('assets/logo/error.jpg'),
                   Text("Error: ${snapshot.error}",
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
                 ],
               ),
             );

@@ -19,7 +19,7 @@ class _StatusViewState extends State<StatusView> {
         backgroundColor: const Color(0xFF3AA17E),
       ),
       body: FutureBuilder<List<ServiceStatusModel>>(
-        future: serviceCenterStatusService(user_id: 2), // Replace with actual API call
+        future: serviceCenterStatusService(), // Replace with actual API call
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -27,14 +27,17 @@ class _StatusViewState extends State<StatusView> {
             );
           }
 
-          
           // Error State
           if (snapshot.hasError) {
             return Center(
               child: Column(
                 children: [
                   Image.asset('assets/logo/error.jpg'),
-                  Text("Error: ${snapshot.error}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  Text(
+                    "Error: ${snapshot.error}",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             );
@@ -62,8 +65,8 @@ class _StatusViewState extends State<StatusView> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ServicePaymentPage(repair_id: service.id ?? 0),
-
+                        builder: (context) =>
+                            ServicePaymentPage(repair_id: service.id ?? 0),
                       ),
                     );
                   },
@@ -87,7 +90,7 @@ class _StatusViewState extends State<StatusView> {
                           //   'Services:',
                           //   style: TextStyle(fontWeight: FontWeight.bold),
                           // ),
-                          // if (service.services != null && service.services!.isNotEmpty) 
+                          // if (service.services != null && service.services!.isNotEmpty)
                           //     ...service.services!.map((item) => Padding(
                           //           padding: const EdgeInsets.only(left: 8.0, top: 4.0),
                           //           child: Text('- $item'),

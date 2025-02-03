@@ -1,44 +1,40 @@
 import 'dart:convert';
-import 'dart:io';                                      
+import 'dart:io';
 
 import 'package:ev_booking/modules/service_list/model/service_list_model.dart';
+import 'package:ev_booking/utils/preference_values.dart';
 import 'package:http/http.dart' as http;
 
 Future<ServiceListRequestModel> serviceListRequestService({
-  
-  required int user,
-  required  List<Map<String, dynamic>> service,
-  required int  service_center_id,
+  required List<Map<String, dynamic>> service,
+  required int service_center_id,
 }) async {
   try {
-    
     //final user =int.parse("2");
-    final vehicle = int.parse("5");
+    // final vehicle = int.parse("5");
+    String user = await PreferenceValues.getUserId();
+    String vehicle = await PreferenceValues.getVehicleId();
 
     Map<String, dynamic> param = {
-      
-      "user" : user.toString(), 
-      "services"  :service,
-      "service_centre" : service_center_id.toString(),
-      "vehicle" : vehicle.toString(),
-
-
+      "user": user,
+      "services": service,
+      "service_centre": service_center_id.toString(),
+      "vehicle": vehicle,
     };
 
     final resp = await http.post(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/repair_request/'), 
+      Uri.parse(
+          'https://vqp6fbbv-8001.inc1.devtunnels.ms/user/repair_request/'),
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
-      
     );
 
     if (resp.statusCode == 200) {
-      
       final dynamic decoded = jsonDecode(resp.body);
       final response = ServiceListRequestModel.fromJson(decoded);
-          
+
       return response;
     } else {
       final Map<String, dynamic> errorResponse = jsonDecode(resp.body);

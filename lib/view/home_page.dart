@@ -6,7 +6,7 @@ import 'package:ev_booking/modules/charging_station/page/evcharging_station_list
 import 'package:ev_booking/modules/service_center/page/service_station_list.dart';
 import 'package:ev_booking/modules/user_profile/page/user_profile.dart';
 import 'package:ev_booking/modules/view_charging_history/page/charging_status_view.dart';
-
+import 'package:ev_booking/utils/preference_values.dart';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -92,8 +92,10 @@ class _UserHomePageState extends State<UserHomePage> {
                     leading: const Icon(Icons.visibility),
                     title: const Text('View Service Status'),
                     onTap: () {
-                       Navigator.push( context,
-                      MaterialPageRoute(builder: (context) =>   const StatusView()),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const StatusView()),
                       );
                     },
                   ),
@@ -101,8 +103,10 @@ class _UserHomePageState extends State<UserHomePage> {
                     leading: const Icon(Icons.charging_station_outlined),
                     title: const Text('View Charging Status'),
                     onTap: () {
-                       Navigator.push( context,
-                      MaterialPageRoute(builder: (context) =>   const ChargingStatusViews()),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ChargingStatusViews()),
                       );
                     },
                   ),
@@ -111,21 +115,23 @@ class _UserHomePageState extends State<UserHomePage> {
                     title: const Text('View Purchase History'),
                     onTap: () {
                       // // Handle view purchase history action
-                      Navigator.push( context,
-                      MaterialPageRoute(builder: (context) =>   const PurchaseHistoryPage()),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PurchaseHistoryPage()),
                       );
-                      
                     },
                   ),
-                  
                   const Divider(),
                   ListTile(
                     leading: const Icon(Icons.logout),
                     title: const Text('Logout'),
-                    onTap: () {
-                     
-                       Navigator.pushReplacement( context,
-                      MaterialPageRoute(builder: (context) =>   const LoginPage()),
+                    onTap: () async {
+                      await PreferenceValues.userLogout();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
                       );
                     },
                   ),
@@ -153,97 +159,106 @@ class _UserHomePageState extends State<UserHomePage> {
             onPageChanged: _onPageChanged,
             children: [
               // Home Page
-              Column(
-                children: [
-                  SizedBox(height: screenHeight * 0.05),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      height: screenHeight * 0.35,
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      autoPlayCurve: Curves.easeInOut,
-                      aspectRatio: 16 / 9,
-                      autoPlayInterval: const Duration(seconds: 3),
-                    ),
-                    items: imageUrls.map((url) {
-                      return Container(
-                        margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(screenWidth * 0.04),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 6,
-                              spreadRadius: 2,
-                              offset: Offset(2, 4),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(height: screenHeight * 0.05),
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: screenHeight * 0.35,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        autoPlayCurve: Curves.easeInOut,
+                        aspectRatio: 16 / 9,
+                        autoPlayInterval: const Duration(seconds: 3),
+                      ),
+                      items: imageUrls.map((url) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.01),
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(screenWidth * 0.04),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.black26,
+                                blurRadius: 6,
+                                spreadRadius: 2,
+                                offset: Offset(2, 4),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(screenWidth * 0.04),
+                            child: Image.asset(
+                              url,
+                              fit: BoxFit.fitWidth,
                             ),
-                          ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(screenWidth * 0.04),
-                          child: Image.asset(
-                            url,
-                            fit: BoxFit.fitWidth,
                           ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                  SizedBox(height: screenHeight * 0.06),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-                    child: Column(
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(height: screenHeight * 0.06),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Welcome to EV CARE',
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                          const Text(
+                            'Explore our services and EV charging stations with ease.',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white70,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.05),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const Text(
-                          'Welcome to EV CARE',
-                          style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.center,
+                        _buildFeatureCard(
+                          context,
+                          title: 'Service Station',
+                          image: 'assets/icons/service.jpeg',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ServiceStation()),
+                            );
+                          },
                         ),
-                        SizedBox(height: screenHeight * 0.01),
-                        const Text(
-                          'Explore our services and EV charging stations with ease.',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white70,
-                          ),
-                          textAlign: TextAlign.center,
+                        _buildFeatureCard(
+                          context,
+                          title: 'EV Charging',
+                          image: 'assets/logo/chargingStation.jpg',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const EVChargingStationList()),
+                            );
+                          },
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.05),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _buildFeatureCard(
-                        context,
-                        title: 'Service Station',
-                        image: 'assets/icons/service.jpeg',
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const ServiceStation()),
-                          );
-                        },
-                      ),
-                      _buildFeatureCard(
-                        context,
-                        title: 'EV Charging',
-                        image: 'assets/logo/chargingStation.jpg',
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const EVChargingStationList()),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
               const ServiceStation(),
               const EVChargingStationList(),
@@ -257,9 +272,12 @@ class _UserHomePageState extends State<UserHomePage> {
         onTap: _onBottomNavTapped,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home, size: 30), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.miscellaneous_services, size: 30), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.electrical_services, size: 30), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle, size: 30), label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.miscellaneous_services, size: 30), label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.electrical_services, size: 30), label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle, size: 30), label: ''),
         ],
         type: BottomNavigationBarType.fixed,
         selectedItemColor: const Color(0xFF3AA17E),
@@ -269,14 +287,17 @@ class _UserHomePageState extends State<UserHomePage> {
   }
 
   Widget _buildFeatureCard(BuildContext context,
-      {required String title, required String image, required VoidCallback onTap}) {
+      {required String title,
+      required String image,
+      required VoidCallback onTap}) {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: onTap,
       child: Card(
         elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(screenWidth * 0.03)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(screenWidth * 0.03)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

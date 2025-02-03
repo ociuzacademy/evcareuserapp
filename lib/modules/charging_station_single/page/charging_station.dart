@@ -2,7 +2,6 @@ import 'package:ev_booking/modules/charging_station_single/model/single_station_
 import 'package:ev_booking/modules/charging_station_single/service/response_station_service.dart';
 import 'package:ev_booking/modules/charging_station_single/service/single_station_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 class ServiceStationBookingPage extends StatefulWidget {
   final String charging_station_id;
@@ -44,7 +43,6 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
         final responseMessage = await bookSlotService(
           connector: selectedConnector.toString(),
           slot_id: selectedTimeslot ?? 0,
-          user_id: int.parse("2"),
         );
         if (responseMessage.status == 'success') {
           if (mounted) {

@@ -1,9 +1,29 @@
-
 import 'package:ev_booking/modules/user_profile_vehicle/service/vehicle_profile_service.dart';
+import 'package:ev_booking/utils/preference_values.dart';
 import 'package:flutter/material.dart';
 
-class VehicleProfilePage extends StatelessWidget {
+class VehicleProfilePage extends StatefulWidget {
   const VehicleProfilePage({super.key});
+
+  @override
+  State<VehicleProfilePage> createState() => _VehicleProfilePageState();
+}
+
+class _VehicleProfilePageState extends State<VehicleProfilePage> {
+  String? _currentVehicleId;
+
+  @override
+  void initState() {
+    super.initState();
+    _getVehicleId();
+  }
+
+  Future<void> _getVehicleId() async {
+    String id = await PreferenceValues.getVehicleId();
+    setState(() {
+      _currentVehicleId = id;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +33,8 @@ class VehicleProfilePage extends StatelessWidget {
         backgroundColor: const Color(0xFF3AA17E),
       ),
       body: FutureBuilder(
-        future: vehicleProfileService(user_id: 2), 
+        future: vehicleProfileService(),
         builder: (context, snapshot) {
-          
-
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -29,12 +47,17 @@ class VehicleProfilePage extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset('assets/logo/error.jpg'),
-                  Text("Error: ${snapshot.error}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  Text(
+                    _currentVehicleId == "0"
+                        ? "You don't have any vehicle right now. Please add your vehicle"
+                        : "Error: ${snapshot.error}",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             );
           }
-
 
           // Empty Response data array
           // if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -42,7 +65,6 @@ class VehicleProfilePage extends StatelessWidget {
           //     child: Text("No service found"),
           //   );
           // }
-
 
           // Extract data
           final vehicle = snapshot.data!;
@@ -60,15 +82,13 @@ class VehicleProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 _buildProfileCard([
-                _buildProfileRow("Brand", vehicle.brand!),
-                _buildProfileRow("Model", vehicle.model!),
-                _buildProfileRow("VIN", vehicle.vin!),
-                _buildProfileRow("Registration Number", vehicle.registrationNum!),
-              ]),
-
+                  _buildProfileRow("Brand", vehicle.brand!),
+                  _buildProfileRow("Model", vehicle.model!),
+                  _buildProfileRow("VIN", vehicle.vin!),
+                  _buildProfileRow(
+                      "Registration Number", vehicle.registrationNum!),
+                ]),
                 const SizedBox(height: 20),
-              
-          
               ],
             ),
           );

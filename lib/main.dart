@@ -1,22 +1,38 @@
-
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:ev_booking/modules/charging_station/page/evcharging_station_list.dart';
+import 'package:flutter/material.dart';
+
+import 'package:ev_booking/modules/login/pages/login_page.dart';
+import 'package:ev_booking/utils/preference_values.dart';
 import 'package:ev_booking/view/home_page.dart';
 import 'package:ev_booking/view/intro_screen.dart';
-import 'package:ev_booking/modules/login/pages/login_page.dart';
-import 'package:ev_booking/modules/signup/pages/signup.dart';
-import 'package:ev_booking/modules/vehicleRegistration/pages/vehicle_register.dart';
-import 'package:flutter/material.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  bool isFirstLaunch = await PreferenceValues.getIntroScreenStatus();
+  bool isLoggedIn = await PreferenceValues.getLoginStatus();
 
-void main() {
-  runApp(const MyApp());
+  Widget initialScreen;
+  if (isFirstLaunch) {
+    initialScreen = const IntroductionPage();
+  } else {
+    if (isLoggedIn) {
+      initialScreen = const UserHomePage();
+    } else {
+      initialScreen = const LoginPage();
+    }
+  }
+  runApp(MyApp(
+    initialScreen: initialScreen,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Widget initialScreen;
+  const MyApp({
+    super.key,
+    required this.initialScreen,
+  });
 
   // This widget is the root of your application.
   @override
@@ -42,30 +58,25 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:
-      AnimatedSplashScreen(
-        splash: 
-        Image.asset(
+      home: AnimatedSplashScreen(
+        splash: Image.asset(
           'assets/logo/logo.jpg',
           height: 150, // Set the height
-          width: 150,  // Set the width
+          width: 150, // Set the width
           fit: BoxFit.cover, // Adjust how the image fits its container
-         // color: Colors.green, // Apply a tint color with transparency
+          // color: Colors.green, // Apply a tint color with transparency
           alignment: Alignment.center, // Align the image within its container
-          
         ),
 
         splashTransition: SplashTransition.scaleTransition,
-            // Center(
-            // child: Text(
-            //   'Splash Screen',style: TextStyle(fontSize: 17),
-              
+        // Center(
+        // child: Text(
+        //   'Splash Screen',style: TextStyle(fontSize: 17),
 
-            // ),
-            // ), 
-      nextScreen:  const IntroductionPage(),),
+        // ),
+        // ),
+        nextScreen: initialScreen,
+      ),
     );
   }
 }
-
-

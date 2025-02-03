@@ -2,21 +2,17 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/user_profile/model/user_profile_model.dart';
+import 'package:ev_booking/utils/preference_values.dart';
 import 'package:http/http.dart' as http;
 
-Future<UserProfileModel>userProfileService(
-   {
-     required int user_id,
-  }
-  
-) async {
+Future<UserProfileModel> userProfileService() async {
   try {
-
     //final user_id =int.parse("2");
+    String userId = await PreferenceValues.getUserId();
 
-     Map<String, dynamic> params = {
-      'id': user_id.toString(),
-     };
+    Map<String, dynamic> params = {
+      'id': userId.toString(),
+    };
 
     final resp = await http.get(
       Uri.parse(UserUrl.userProfileUrl).replace(queryParameters: params),
@@ -26,12 +22,9 @@ Future<UserProfileModel>userProfileService(
     );
     //final List<dynamic> decoded = jsonDecode(resp.body);
     if (resp.statusCode == 200) {
-
       final dynamic decoded = jsonDecode(resp.body);
       final response = UserProfileModel.fromJson(decoded);
       return response;
-      
-
     } else {
       throw Exception('Failed to load response');
     }

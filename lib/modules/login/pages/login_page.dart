@@ -1,12 +1,8 @@
 import 'package:ev_booking/modules/login/service/login_service.dart';
+import 'package:ev_booking/utils/preference_values.dart';
 import 'package:ev_booking/view/home_page.dart';
 import 'package:ev_booking/modules/signup/pages/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:ev_booking/constants/urls.dart';
-
-bool _isLoading = false; // To manage loading state
-
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+  bool _isLoading = false; // To manage loading state
 
   @override
   void dispose() {
@@ -31,8 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   // Function to handle form submission
   Future<void> _loginUser() async {
     if (_formKey.currentState?.validate() == true) {
-
-       setState(() {
+      setState(() {
         _isLoading = true; // Start loading
       });
 
@@ -41,7 +37,8 @@ class _LoginPageState extends State<LoginPage> {
           username: _usernameController.text.trim(),
           password: _passwordController.text.trim(),
         );
-       // print(responseMessage);
+        await PreferenceValues.userLogin(userId: responseMessage.userId!);
+        // print(responseMessage);
 
         if (responseMessage.status == 'success') {
           if (mounted) {
@@ -55,11 +52,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
             );
           }
-         
         } else {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(responseMessage.message??"Unkown error")),
+              SnackBar(
+                  content: Text(responseMessage.message ?? "Unkown error")),
             );
           }
         }
@@ -69,8 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             SnackBar(content: Text('Login failed: $e')),
           );
         }
-      }
-      finally {
+      } finally {
         setState(() {
           _isLoading = false; // Stop loading
         });
@@ -145,7 +141,6 @@ class _LoginPageState extends State<LoginPage> {
                           controller: _usernameController,
                           label: 'Username',
                           icon: Icons.account_circle,
-                          
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your username';
@@ -174,8 +169,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                 
-                   // Login button with CircularProgressIndicator
+
+                  // Login button with CircularProgressIndicator
                   SizedBox(
                     width: double.infinity,
                     child: _isLoading
@@ -188,7 +183,8 @@ class _LoginPageState extends State<LoginPage> {
                         : ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF176A4D),
-                              padding: const EdgeInsets.symmetric(vertical: 16.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
@@ -208,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                   // Sign-up and Forgot Password links
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [                    
+                    children: [
                       TextButton(
                         onPressed: () {
                           // Forgot password functionality
@@ -230,8 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
                         },
-                        child: const 
-                        Text(
+                        child: const Text(
                           'Sign Up',
                           style: TextStyle(
                             color: Color(0xFF176A4D),
@@ -256,14 +251,13 @@ class _LoginPageState extends State<LoginPage> {
     required IconData icon,
     required String? Function(String?) validator,
     bool isPassword = false,
-    
   }) {
     return TextFormField(
       controller: controller,
-       obscureText: isPassword && !_isPasswordVisible,
+      obscureText: isPassword && !_isPasswordVisible,
       decoration: InputDecoration(
         prefixIcon: Icon(icon, color: const Color(0xFF176A4D)),
-          suffixIcon: isPassword
+        suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(
                   _isPasswordVisible ? Icons.visibility : Icons.visibility_off,

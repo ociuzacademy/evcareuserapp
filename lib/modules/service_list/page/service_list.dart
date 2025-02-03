@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 class ServiceList extends StatefulWidget {
   final int service_center_id;
 
-  const ServiceList({super.key,
-  required this.service_center_id});
+  const ServiceList({super.key, required this.service_center_id});
 
   @override
   _ServiceListState createState() => _ServiceListState();
@@ -18,7 +17,11 @@ class _ServiceListState extends State<ServiceList> {
     {'name': 'Emergency Roadside Assistance', 'amount': 3000, 'time': '5 hour'},
     {'name': 'Customization and Upgrades', 'amount': 5000, 'time': '3 day'},
     {'name': 'Cleaning Service', 'amount': 300, 'time': '30 mins'},
-    {'name': 'Diagnostics and Troubleshooting', 'amount': 500, 'time': '30 mins'},
+    {
+      'name': 'Diagnostics and Troubleshooting',
+      'amount': 500,
+      'time': '30 mins'
+    },
   ];
 
   List<bool> selectedServices = [];
@@ -31,7 +34,6 @@ class _ServiceListState extends State<ServiceList> {
     selectedServices = List.filled(services.length, false);
   }
 
-
   void toggleSelection(int index) {
     setState(() {
       if (selectedServices[index]) {
@@ -43,8 +45,6 @@ class _ServiceListState extends State<ServiceList> {
     });
   }
 
-
-
   Future<void> _requestService() async {
     List<Map<String, dynamic>> filteredServices = [];
     for (int index = 0; index < services.length; index++) {
@@ -53,17 +53,13 @@ class _ServiceListState extends State<ServiceList> {
       }
     }
 
-    if (filteredServices.isEmpty) return; 
+    if (filteredServices.isEmpty) return;
 
     try {
-      final int userId = int.parse("2"); 
       final responseMessage = await serviceListRequestService(
         //brand: "EV Brand", // Replace with actual brand if needed
-        user: userId,
         service: filteredServices,
-        service_center_id : widget.service_center_id,
-
-
+        service_center_id: widget.service_center_id,
       );
 
       if (responseMessage.status == 'success') {
@@ -71,7 +67,6 @@ class _ServiceListState extends State<ServiceList> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Service registered successfully')),
           );
-          
         }
       } else {
         if (mounted) {
@@ -88,20 +83,13 @@ class _ServiceListState extends State<ServiceList> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-      
-       AppBar(
+      appBar: AppBar(
         title: const Text('Services '),
         backgroundColor: const Color(0xFF3AA17E),
-        
       ),
-
-      
       body: Column(
         children: [
           Expanded(
@@ -109,7 +97,8 @@ class _ServiceListState extends State<ServiceList> {
               itemCount: services.length,
               itemBuilder: (context, index) {
                 return Card(
-                  margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                   child: ListTile(
                     title: Text(
                       services[index]['name'],
@@ -147,7 +136,9 @@ class _ServiceListState extends State<ServiceList> {
                 child: Text(
                   'Continue (₹$totalAmount)',
                   style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
             ),

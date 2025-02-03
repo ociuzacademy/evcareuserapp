@@ -1,4 +1,3 @@
-import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/products/model/productlist.dart';
 import 'package:ev_booking/modules/products/service/product_list_service.dart';
 import 'package:ev_booking/modules/single_product/page/single_product.dart';
@@ -6,13 +5,13 @@ import 'package:flutter/material.dart';
 
 class ProductListPage extends StatelessWidget {
   final int service_center_id;
-  const ProductListPage({super.key,
-  required this.service_center_id});
+  const ProductListPage({super.key, required this.service_center_id});
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width; // Get screen width
-    final screenHeight = MediaQuery.of(context).size.height; // Get screen height
+    final screenHeight =
+        MediaQuery.of(context).size.height; // Get screen height
 
     return Scaffold(
       appBar: AppBar(
@@ -22,7 +21,7 @@ class ProductListPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: FutureBuilder<List<SingleProductListModel>>(
-          future: productList(service_centre_id:service_center_id.toString() ),
+          future: productList(service_centre_id: service_center_id.toString()),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -31,23 +30,30 @@ class ProductListPage extends StatelessWidget {
             }
 
             if (snapshot.hasError) {
-            return Center(
-              child: Column(
-                children: [
-                  Image.asset('assets/logo/error.jpg'),
-                  Text("Error: ${snapshot.error}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                ],
-              ),
-            );
-          }
-
+              return Center(
+                child: Column(
+                  children: [
+                    Image.asset('assets/logo/error.jpg'),
+                    Text(
+                      "Error: ${snapshot.error}",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              );
+            }
 
             if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(
                 child: Column(
                   children: [
                     Image.asset('assets/logo/no service.jpg'),
-                    const Text("No products found",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                    const Text(
+                      "No products found",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
               );
@@ -64,7 +70,8 @@ class ProductListPage extends StatelessWidget {
               itemCount: products.length,
               itemBuilder: (context, index) {
                 final product = products[index];
-                return _buildProductCard(context, product, screenWidth, screenHeight);
+                return _buildProductCard(
+                    context, product, screenWidth, screenHeight);
               },
             );
           },
@@ -73,22 +80,21 @@ class ProductListPage extends StatelessWidget {
     );
   }
 
-  Widget _buildProductCard(BuildContext context, SingleProductListModel product, double screenWidth, double screenHeight) {
+  Widget _buildProductCard(BuildContext context, SingleProductListModel product,
+      double screenWidth, double screenHeight) {
     final imageWidth = screenWidth * 3; // 40% of screen width
     final imageHeight = imageWidth; // Make it square
 
     return GestureDetector(
-      onTap: () 
-           {
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-              builder: (context) => ProductDetailPage(product_id: product.id?.toString() ?? '0'),
-
-              
-              ),
-              );
-           },
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ProductDetailPage(product_id: product.id?.toString() ?? '0'),
+          ),
+        );
+      },
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(
@@ -128,15 +134,14 @@ class ProductListPage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-              product.name!.length > 20
-                  ? '${product.name!.substring(0, 20)}...' // Show first 15 characters
-                  : product.name!, // Show full name if shorter
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+                product.name!.length > 20
+                    ? '${product.name!.substring(0, 20)}...' // Show first 15 characters
+                    : product.name!, // Show full name if shorter
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-
               const SizedBox(height: 4),
               Text(
                 product.description!,

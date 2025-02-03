@@ -1,38 +1,31 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:ev_booking/modules/user_profile_vehicle/model/vehicle_profile_model.dart';
+import 'package:ev_booking/utils/preference_values.dart';
 import 'package:http/http.dart' as http;
 
-Future<VehicleProfileModel>vehicleProfileService(
-   {
-     required int user_id,
-  }
-  
-  ) async {
+Future<VehicleProfileModel> vehicleProfileService() async {
   try {
-
     //final user_id =int.parse("2");
-
-     Map<String, dynamic> params = {
-      'user_id': user_id.toString(),
-     };
+    String userId = await PreferenceValues.getUserId();
+    Map<String, dynamic> params = {
+      'user_id': userId.toString(),
+    };
 
     final resp = await http.get(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_vehicle_profile/').replace(queryParameters: params),
+      Uri.parse(
+              'https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_vehicle_profile/')
+          .replace(queryParameters: params),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },
     );
     //final List<dynamic> decoded = jsonDecode(resp.body);
     if (resp.statusCode == 200) {
-
       final dynamic decoded = jsonDecode(resp.body);
 
-      
       final response = VehicleProfileModel.fromJson(decoded);
       return response;
-      
-
     } else {
       throw Exception('Failed to load response');
     }
