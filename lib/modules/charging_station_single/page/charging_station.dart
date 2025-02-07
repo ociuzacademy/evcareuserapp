@@ -17,6 +17,7 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? selectedConnector;
   int? selectedTimeslot;
+  bool _isLoading = false;
 
   // void _submitForm() {
   //   if (selectedConnector == null || selectedTimeslot == null) {
@@ -38,7 +39,10 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
   // }
 
   Future<void> _submitForm() async {
-    if (selectedConnector == null || selectedTimeslot == null) {
+    if (selectedConnector != null && selectedTimeslot != null) {
+      setState(() {
+        _isLoading = true;
+      });
       try {
         final responseMessage = await bookSlotService(
           connector: selectedConnector.toString(),
@@ -67,6 +71,10 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
             SnackBar(content: Text('Slot Booking failed: $e')),
           );
         }
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -127,6 +135,7 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
           final serviceCenter = snapshot.data!;
 
           return Container(
+            height: double.infinity,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Color.fromARGB(255, 172, 228, 209), Color(0xFFD8E8E4)],
@@ -188,6 +197,14 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: screenHeight * 0.01),
+                                Text(
+                                  'Rate: ₹${serviceCenter.ratePerSlot}/ hour',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black54,
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -297,21 +314,25 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
                     SizedBox(height: screenHeight * 0.01),
 
                     Center(
-                      child: ElevatedButton(
-                        onPressed: _submitForm,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF3AA17E),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.1, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          "Submit",
-                          style: TextStyle(fontSize: 18, color: Colors.white),
-                        ),
-                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : ElevatedButton(
+                              onPressed: _submitForm,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF3AA17E),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth * 0.1,
+                                    vertical: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              child: const Text(
+                                "Submit",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white),
+                              ),
+                            ),
                     ),
                   ],
                 ),

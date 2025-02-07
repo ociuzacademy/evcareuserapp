@@ -16,19 +16,53 @@ class _EVRegistrationFormState extends State<EVRegistrationForm> {
   final TextEditingController _registrationController = TextEditingController();
 
   final Map<String, Map<String, List<String>>> _vehicleData = {
-    'Tesla': {
-      'Model S': ['Type 2', 'CCS'],
-      'Model 3': ['Type 2', 'CCS'],
-    },
-    'Nissan': {
-      'Leaf': ['CHAdeMO', 'Type 1'],
-      'Ariya': ['Type 2', 'CCS'],
-    },
-    'BMW': {
-      'i3': ['Type 2', 'CCS'],
-      'iX': ['Type 2', 'CCS'],
-    },
-  };
+      'Tesla': {
+        'Model S': ['Type 2', 'CCS'],
+        'Model 3': ['Type 2', 'CCS'],
+        'Model X': ['Type 2', 'CCS'],
+        'Model Y': ['Type 2', 'CCS'],
+        'Roadster': ['Type 2'],
+      },
+      'Nissan': {
+        'Leaf': ['CHAdeMO', 'Type 1'],
+        'Ariya': ['Type 2', 'CCS'],
+        'Note e-Power': ['CHAdeMO'],
+      },
+      'BMW': {
+        'i3': ['Type 2', 'CCS'],
+        'iX': ['Type 2', 'CCS'],
+        'i4': ['Type 2', 'CCS'],
+        'iX3': ['Type 2', 'CCS'],
+      },
+      'Audi': {
+        'e-tron': ['Type 2', 'CCS'],
+        'Q4 e-tron': ['Type 2', 'CCS'],
+        'RS e-tron GT': ['Type 2', 'CCS'],
+      },
+      'Hyundai': {
+        'Kona Electric': ['Type 2', 'CCS'],
+        'Ioniq 5': ['Type 2', 'CCS'],
+        'Ioniq 6': ['Type 2', 'CCS'],
+      },
+      'Mercedes-Benz': {
+        'EQC': ['Type 2', 'CCS'],
+        'EQS': ['Type 2', 'CCS'],
+        'EQA': ['Type 2', 'CCS'],
+      },
+      'Porsche': {
+        'Taycan': ['Type 2', 'CCS'],
+      },
+      'Ford': {
+        'Mustang Mach-E': ['Type 2', 'CCS'],
+        'F-150 Lightning': ['Type 2', 'CCS'],
+      },
+      'Volkswagen': {
+        'ID.3': ['Type 2', 'CCS'],
+        'ID.4': ['Type 2', 'CCS'],
+        'ID. Buzz': ['Type 2', 'CCS'],
+      },
+};
+
 
   String? _selectedBrand;
   String? _selectedModel;

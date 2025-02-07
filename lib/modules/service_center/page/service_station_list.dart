@@ -21,7 +21,6 @@ class ServiceStation extends StatelessWidget {
       body: FutureBuilder<List<ServiceCentreModel>>(
         future: serviceCentreList(),
         builder: (context, snapshot) {
-         
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -34,12 +33,15 @@ class ServiceStation extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset('assets/logo/error.jpg'),
-                  Text("Error: ${snapshot.error}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                  Text(
+                    "Error: ${snapshot.error}",
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             );
           }
-
 
           // Empty Response data array
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -60,7 +62,8 @@ class ServiceStation extends StatelessWidget {
                 ),
                 elevation: 5,
                 child: Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.03), // Responsive padding
+                  padding:
+                      EdgeInsets.all(screenWidth * 0.03), // Responsive padding
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -70,7 +73,8 @@ class ServiceStation extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              center.image ?? 'assets/icons/image.png', // Load the external image if `center.image` is null
+                              center.image ??
+                                  'assets/icons/image.png', // Load the external image if `center.image` is null
                               width: screenWidth * 0.2, // Responsive width
                               height: screenWidth * 0.2, // Responsive height
                               fit: BoxFit.cover,
@@ -79,14 +83,16 @@ class ServiceStation extends StatelessWidget {
                                 return Image.asset(
                                   'assets/icons/image.png',
                                   width: screenWidth * 0.2, // Responsive width
-                                  height: screenWidth * 0.2, // Responsive height
+                                  height:
+                                      screenWidth * 0.2, // Responsive height
                                   fit: BoxFit.cover,
                                 );
                               },
                             ),
                           ),
 
-                          SizedBox(width: screenWidth * 0.03), // Responsive spacing
+                          SizedBox(
+                              width: screenWidth * 0.03), // Responsive spacing
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,26 +100,37 @@ class ServiceStation extends StatelessWidget {
                                 Text(
                                   center.name!,
                                   style: TextStyle(
-                                    fontSize: screenWidth * 0.05, // Responsive text size
+                                    fontSize: screenWidth *
+                                        0.05, // Responsive text size
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: screenHeight * 0.01), // Responsive spacing
+                                SizedBox(
+                                    height: screenHeight *
+                                        0.01), // Responsive spacing
                                 Text(
                                   center.address!,
                                   style: TextStyle(
-                                    fontSize: screenWidth * 0.035, // Responsive text size
+                                    fontSize: screenWidth *
+                                        0.035, // Responsive text size
                                     color: Colors.grey,
                                   ),
                                 ),
-                                SizedBox(height: screenHeight * 0.01), // Responsive spacing
+                                SizedBox(
+                                    height: screenHeight *
+                                        0.01), // Responsive spacing
                                 Row(
                                   children: [
-                                    const Icon(Icons.access_time, size: 16, color: Colors.grey),
-                                    SizedBox(width: screenWidth * 0.02), // Responsive spacing
+                                    const Icon(Icons.access_time,
+                                        size: 16, color: Colors.grey),
+                                    SizedBox(
+                                        width: screenWidth *
+                                            0.02), // Responsive spacing
                                     Text(
                                       center.workingHours!,
-                                      style: TextStyle(fontSize: screenWidth * 0.035), // Responsive text size
+                                      style: TextStyle(
+                                          fontSize: screenWidth *
+                                              0.035), // Responsive text size
                                     ),
                                   ],
                                 ),
@@ -122,7 +139,8 @@ class ServiceStation extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: screenHeight * 0.02), // Responsive spacing
+                      SizedBox(
+                          height: screenHeight * 0.02), // Responsive spacing
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -131,7 +149,10 @@ class ServiceStation extends StatelessWidget {
                               // Handle Get Service Access action
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(builder: (context) => ServiceList(service_center_id: center.id??0,)),
+                                MaterialPageRoute(
+                                    builder: (context) => ServiceList(
+                                          service_center_id: center.id ?? 0,
+                                        )),
                               );
                             },
                             style: ElevatedButton.styleFrom(
@@ -143,7 +164,13 @@ class ServiceStation extends StatelessWidget {
                           ElevatedButton.icon(
                             onPressed: () {
                               // Handle Buy Products action
-                              Navigator.push(context, MaterialPageRoute(builder: (context) =>  ProductListPage(service_center_id: center.id??0,),));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductListPage(
+                                      service_center_id: center.id ?? 0,
+                                    ),
+                                  ));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,

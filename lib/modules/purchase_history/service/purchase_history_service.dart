@@ -13,8 +13,7 @@ Future<List<PurchaseHistoryModel>> purchaseHistoryService() async {
     };
 
     final resp = await http.get(
-      Uri.parse(
-              'https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_purchased_products/')
+      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_purchased_products/')
           .replace(queryParameters: param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

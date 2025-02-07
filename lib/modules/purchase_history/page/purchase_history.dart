@@ -79,8 +79,8 @@ class PurchaseHistoryPage extends StatelessWidget {
                         const SizedBox(height: 8),
                         _buildDetailItem('Date', dateFormat.format(item.date!)),
                         const SizedBox(height: 8),
-                        _buildDetailItem(
-                            'Service Center', item.serviceCentre!.toString()),
+                        // _buildDetailItem(
+                        //     'Service Center', item.serviceCentre!.toString()),
                       ],
                     ),
                   ),
