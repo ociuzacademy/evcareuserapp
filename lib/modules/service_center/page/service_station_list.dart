@@ -71,25 +71,30 @@ class ServiceStation extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              center.image ??
-                                  'assets/icons/image.png', // Load the external image if `center.image` is null
-                              width: screenWidth * 0.2, // Responsive width
-                              height: screenWidth * 0.2, // Responsive height
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                // Fallback to a local asset image if the external image fails to load
-                                return Image.asset(
-                                  'assets/icons/image.png',
-                                  width: screenWidth * 0.2, // Responsive width
-                                  height:
-                                      screenWidth * 0.2, // Responsive height
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            ),
-                          ),
+                              borderRadius: BorderRadius.circular(10),
+                              child: center.image != null
+                                  ? Image.network(
+                                      center.image!, // Load the external image
+                                      width: screenWidth * 0.2,
+                                      height: screenWidth * 0.2,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        // Fallback to a local asset image if the external image fails to load
+                                        return Image.asset(
+                                          'assets/icons/image.png',
+                                          width: screenWidth * 0.2,
+                                          height: screenWidth * 0.2,
+                                          fit: BoxFit.cover,
+                                        );
+                                      },
+                                    )
+                                  : Image.asset(
+                                      'assets/icons/image.png', // Load the local asset directly
+                                      width: screenWidth * 0.2,
+                                      height: screenWidth * 0.2,
+                                      fit: BoxFit.cover,
+                                    )),
 
                           SizedBox(
                               width: screenWidth * 0.03), // Responsive spacing
