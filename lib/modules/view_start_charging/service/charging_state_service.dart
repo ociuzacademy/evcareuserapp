@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/view_start_charging/model/charging_state_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +15,7 @@ Future<SingleChargingStationBillModel> bookingService({
     };
 
     final resp = await http.get(
-      Uri.parse("https://vqp6fbbv-8001.inc1.devtunnels.ms/user/single_booking/")
+      Uri.parse(UserUrl.single_booking)
           .replace(queryParameters: params),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

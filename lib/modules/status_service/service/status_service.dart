@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/status_service/model/status_service_model.dart';
 import 'package:ev_booking/utils/preference_values.dart';
 import 'package:http/http.dart' as http;
@@ -12,8 +13,7 @@ Future<List<ServiceStatusModel>> serviceCenterStatusService() async {
     };
 
     final resp = await http.get(
-      Uri.parse(
-              'https://vqp6fbbv-8001.inc1.devtunnels.ms/user/view_repair_requests/')
+      Uri.parse(UserUrl.view_repair_request)
           .replace(queryParameters: param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

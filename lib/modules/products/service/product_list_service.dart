@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/products/model/productlist.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +13,7 @@ Future<List<SingleProductListModel>> productList({
       'service_centre': service_centre_id,
     };
     final resp = await http.get(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/view_products/')
+      Uri.parse(UserUrl.productListUrl)
           .replace(queryParameters: params),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

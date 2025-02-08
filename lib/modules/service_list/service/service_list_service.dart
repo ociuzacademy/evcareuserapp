@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/service_list/model/service_list_model.dart';
 import 'package:ev_booking/utils/preference_values.dart';
 import 'package:http/http.dart' as http;
@@ -23,8 +24,7 @@ Future<ServiceListRequestModel> serviceListRequestService({
     };
 
     final resp = await http.post(
-      Uri.parse(
-          'https://vqp6fbbv-8001.inc1.devtunnels.ms/user/repair_request/'),
+      Uri.parse(UserUrl.repair_request),
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

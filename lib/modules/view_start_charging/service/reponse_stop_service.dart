@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/view_start_charging/model/response_start_model.dart';
 
 import 'package:http/http.dart' as http;
@@ -13,7 +14,7 @@ Future<ResponseStatusModel> stopChargingService({
     };
 
     final resp = await http.patch(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/stop_charging/'),
+      Uri.parse(UserUrl.stop_charging),
       body: jsonEncode(param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

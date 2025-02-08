@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/purchase_history/model/purchase_histroy_model.dart';
 import 'package:ev_booking/utils/preference_values.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +14,7 @@ Future<List<PurchaseHistoryModel>> purchaseHistoryService() async {
     };
 
     final resp = await http.get(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_purchased_products/')
+      Uri.parse(UserUrl.user_purchased_products)
           .replace(queryParameters: param),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',

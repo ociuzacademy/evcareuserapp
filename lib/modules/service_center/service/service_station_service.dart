@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/service_center/model/service_center_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +11,7 @@ Future<List<ServiceCentreModel>> serviceCentreList(
 ) async {
   try {
     final resp = await http.get(
-      Uri.parse('https://vqp6fbbv-8001.inc1.devtunnels.ms/user/list_service_centres/'),
+      Uri.parse(UserUrl.list_service_centres),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
       },

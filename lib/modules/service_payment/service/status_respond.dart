@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/service_payment/model/payment_response_model.dart';
 
 import 'package:http/http.dart' as http;
@@ -12,8 +13,7 @@ Future<PaymentResponseModel> paymentServiceRespond({
       'repair': reairId.toString(),
     };
     final resp = await http.patch(
-      Uri.parse(
-          'https://vqp6fbbv-8001.inc1.devtunnels.ms/user/user_update_status/'),
+      Uri.parse(UserUrl.update_statusUrl),
       body: jsonEncode(params),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=utf-8',
