@@ -1,3 +1,4 @@
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/charging_station/model/charging_station_model.dart';
 import 'package:ev_booking/modules/charging_station/service/charging_station_service.dart';
 import 'package:ev_booking/modules/charging_station_single/page/charging_station.dart';
@@ -87,7 +88,7 @@ class EVChargingStationList extends StatelessWidget {
                           bottomLeft: Radius.circular(10),
                         ),
                         child: Image.network(
-                          "https://vqp6fbbv-8001.inc1.devtunnels.ms/${station.image}",
+                          "${UserUrl.baseUrl}/${station.image}",
                           width: size.width * 0.2,
                           height: size.width * 0.2,
                           fit: BoxFit.cover,

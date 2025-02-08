@@ -17,6 +17,7 @@ Future<ResponseStatusModel> startChargingService({
       Uri.parse(UserUrl.start_charging),
       body: jsonEncode(param),
       headers: <String, String>{
+        
         'Content-Type': 'application/json; charset=utf-8',
       },
     );

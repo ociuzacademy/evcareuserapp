@@ -1,3 +1,4 @@
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/charging_station_single/model/single_station_model.dart';
 import 'package:ev_booking/modules/charging_station_single/service/response_station_service.dart';
 import 'package:ev_booking/modules/charging_station_single/service/single_station_service.dart';
@@ -163,7 +164,7 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
                               top: Radius.circular(15),
                             ),
                             child: Image.network(
-                              "https://vqp6fbbv-8001.inc1.devtunnels.ms/${serviceCenter.image}",
+                              "${UserUrl.baseUrl}/${serviceCenter.image}",
                               height: screenHeight * 0.25,
                               width: double.infinity,
                               fit: BoxFit.cover,

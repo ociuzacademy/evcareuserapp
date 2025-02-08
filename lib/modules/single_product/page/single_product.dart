@@ -1,3 +1,4 @@
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/single_product/service/buy_product_service.dart';
 import 'package:ev_booking/modules/single_product/service/single_product_service.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +108,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       borderRadius: BorderRadius.circular(12),
                       image: DecorationImage(
                         image: NetworkImage(
-                          "https://vqp6fbbv-8001.inc1.devtunnels.ms/${singleitem?.image}",
+                          "${UserUrl.baseUrl}/${singleitem?.image}",
                         ),
                         fit: BoxFit.cover,
                       ),

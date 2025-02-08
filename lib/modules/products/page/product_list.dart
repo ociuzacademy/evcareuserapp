@@ -1,3 +1,4 @@
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/products/model/productlist.dart';
 import 'package:ev_booking/modules/products/service/product_list_service.dart';
 import 'package:ev_booking/modules/single_product/page/single_product.dart';
@@ -115,7 +116,7 @@ class ProductListPage extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        "https://vqp6fbbv-8001.inc1.devtunnels.ms/${product.image}",
+                        "${UserUrl.baseUrl}/${product.image}",
                         width: imageWidth,
                         height: imageHeight,
                         fit: BoxFit.cover,

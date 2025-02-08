@@ -1,3 +1,4 @@
+import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/service_center/model/service_center_model.dart';
 import 'package:ev_booking/modules/service_center/service/service_station_service.dart';
 import 'package:ev_booking/modules/products/page/product_list.dart';
@@ -74,7 +75,7 @@ class ServiceStation extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               child: center.image != null
                                   ? Image.network(
-                                      center.image!, // Load the external image
+                                      '${UserUrl.baseUrl}/${center.image!}', // Load the external image
                                       width: screenWidth * 0.2,
                                       height: screenWidth * 0.2,
                                       fit: BoxFit.cover,
