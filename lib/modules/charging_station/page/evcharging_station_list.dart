@@ -88,7 +88,7 @@ class EVChargingStationList extends StatelessWidget {
                           bottomLeft: Radius.circular(10),
                         ),
                         child: Image.network(
-                          "${UserUrl.baseUrl}/${station.image}",
+                          "${UserUrl.baseUrl}/${station.image!}",
                           width: size.width * 0.2,
                           height: size.width * 0.2,
                           fit: BoxFit.cover,
@@ -151,7 +151,7 @@ class EVChargingStationList extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    "Rate: ${station.ratePerSlot}/ hour",
+                                    "Rate: ${station.ratePerSlot!}/ hour",
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,

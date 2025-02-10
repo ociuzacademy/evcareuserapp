@@ -298,6 +298,7 @@ class _RegisterPageState extends State<RegisterPage> {
         prefixIcon: Icon(icon, color: const Color(0xFF176A4D)),
         filled: true,
         fillColor: Colors.white,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide.none,

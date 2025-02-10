@@ -274,6 +274,7 @@ class _LoginPageState extends State<LoginPage> {
         labelStyle: const TextStyle(color: Color(0xFF176A4D)),
         filled: true,
         fillColor: Colors.white,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
           borderSide: BorderSide.none,

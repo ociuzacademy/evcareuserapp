@@ -67,6 +67,9 @@ class _ServiceListState extends State<ServiceList> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Service registered successfully')),
           );
+          Navigator.pop(
+            context,
+          );
         }
       } else {
         if (mounted) {
