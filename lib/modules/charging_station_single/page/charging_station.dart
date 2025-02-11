@@ -1,5 +1,6 @@
 import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/charging_station_single/model/single_station_model.dart';
+import 'package:ev_booking/modules/charging_station_single/page/payment.dart';
 import 'package:ev_booking/modules/charging_station_single/service/response_station_service.dart';
 import 'package:ev_booking/modules/charging_station_single/service/single_station_service.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
       setState(() {
         _isLoading = true;
       });
+
       try {
         final responseMessage = await bookSlotService(
           connector: selectedConnector.toString(),
@@ -51,12 +53,13 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
         );
         if (responseMessage.status == 'success') {
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Slot Booking confirmed')),
-            );
-            Navigator.pop(
+            Navigator.push(
               context,
+              MaterialPageRoute(builder: (context) => const PaymentOpp()),
             );
+            // Navigator.pop(
+            //   context,
+            // );
           }
         } else {
           if (mounted) {
