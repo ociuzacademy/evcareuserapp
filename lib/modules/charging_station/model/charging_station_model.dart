@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final chargingStationModel = chargingStationModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<ChargingStationModel> chargingStationModelFromJson(String str) =>
@@ -39,15 +35,15 @@ class ChargingStationModel {
         id: json["id"],
         slots: json["slots"] == null
             ? []
-            : List<Slot>.from(json["slots"]!.map((x) => Slot.fromJson(x))),
+            : List<Slot>.from(json["slots"].map((x) => Slot.fromJson(x))),
         image: json["image"],
         name: json["name"],
         address: json["address"],
         workingHours: json["working_hours"],
         connectors: json["connectors"] == null
             ? []
-            : List<Connector>.from(
-                json["connectors"]!.map((x) => connectorValues.map[x]!)),
+            : List<Connector>.from(json["connectors"].map(
+                (x) => connectorValues.map[x] ?? Connector.TYPE_2_CONNECTORS)),
         ratePerSlot: json["rate_per_slot"],
         capacity: json["capacity"],
       );
@@ -63,8 +59,8 @@ class ChargingStationModel {
         "working_hours": workingHours,
         "connectors": connectors == null
             ? []
-            : List<dynamic>.from(
-                connectors!.map((x) => connectorValues.reverse[x])),
+            : List<dynamic>.from(connectors!
+                .map((x) => connectorValues.reverse[x] ?? "Type 2 connectors")),
         "rate_per_slot": ratePerSlot,
         "capacity": capacity,
       };
@@ -73,7 +69,7 @@ class ChargingStationModel {
 enum Connector { GB_T, TYPE_1, TYPE_2_CONNECTORS }
 
 final connectorValues = EnumValues({
-  "GB/T ": Connector.GB_T,
+  "GB/T": Connector.GB_T,
   "Type 1": Connector.TYPE_1,
   "Type 2 connectors": Connector.TYPE_2_CONNECTORS
 });

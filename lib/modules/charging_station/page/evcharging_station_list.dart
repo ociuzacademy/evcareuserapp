@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ev_booking/constants/urls.dart';
 import 'package:ev_booking/modules/charging_station/model/charging_station_model.dart';
 import 'package:ev_booking/modules/charging_station/service/charging_station_service.dart';
@@ -68,7 +69,7 @@ class EVChargingStationList extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => ServiceStationBookingPage(
-                          charging_station_id: station.id
+                          charging_station_id: station.id!
                               .toString()), //ServiceStationBookingPage(charging_station_id:station.id.toString()),
                     ),
                   );
@@ -83,25 +84,24 @@ class EVChargingStationList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                        ),
-                        child: Image.network(
-                          "${UserUrl.baseUrl}/${station.image!}",
-                          width: size.width * 0.2,
-                          height: size.width * 0.2,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: "${UserUrl.baseUrl}/${station.image!}",
+                            width: size.width * 0.2,
+                            height: size.width * 0.2,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Image.asset(
                               'assets/icons/image.png',
                               width: size.width * 0.2,
                               height: size.width * 0.2,
                               fit: BoxFit.cover,
-                            );
-                          },
-                        ),
-                      ),
+                            ),
+                          )),
                       const SizedBox(width: 10),
                       Expanded(
                         child: Padding(
@@ -110,7 +110,7 @@ class EVChargingStationList extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                station.name!,
+                                station.name ?? "Unkown station",
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -118,7 +118,7 @@ class EVChargingStationList extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                station.address!,
+                                station.address ?? "Unkown address",
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -134,14 +134,18 @@ class EVChargingStationList extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 5),
                                   Text(
-                                    station.workingHours!,
+                                    station.workingHours ??
+                                        "Unkown Working time",
                                     style: const TextStyle(fontSize: 14),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                "Connectors: ${station.connectors!.join(', ')}",
+                                station.connectors != null &&
+                                        station.connectors!.isNotEmpty
+                                    ? "Connectors: ${station.connectors!.join(', ')}"
+                                    : "No connectors available",
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -151,7 +155,7 @@ class EVChargingStationList extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    "Rate: ${station.ratePerSlot!}/ hour",
+                                    "Rate: ${station.ratePerSlot ?? 'N/A'}/ hour",
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -160,7 +164,7 @@ class EVChargingStationList extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 20),
                                   Text(
-                                    "Capacity: ${station.capacity!} kW",
+                                    "Capacity: ${station.capacity ?? 'N/A'} kW",
                                     style: const TextStyle(fontSize: 14),
                                   ),
                                 ],

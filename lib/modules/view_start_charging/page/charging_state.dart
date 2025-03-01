@@ -245,7 +245,7 @@ class _BillPageState extends State<BillPage> {
                                 ),
                               ),
                               child: const Text(
-                                "Charging Started",
+                                "Charging\nStarted",
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.white),
                               ),
@@ -267,7 +267,7 @@ class _BillPageState extends State<BillPage> {
                                 ),
                               ),
                               child: const Text(
-                                "Charging Ended",
+                                "Charging\nEnded",
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.white),
                               ),

@@ -182,7 +182,7 @@ class ServiceStation extends StatelessWidget {
                               backgroundColor: Colors.blue,
                             ),
                             icon: const Icon(Icons.shopping_cart),
-                            label: const Text("Buy Products"),
+                            label: const Text("Buy\nProducts"),
                           ),
                         ],
                       ),
