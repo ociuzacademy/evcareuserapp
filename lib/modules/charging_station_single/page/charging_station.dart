@@ -167,10 +167,18 @@ class _ServiceStationBookingPageState extends State<ServiceStationBookingPage> {
                               top: Radius.circular(15),
                             ),
                             child: Image.network(
-                              "${UserUrl.baseUrl}/${serviceCenter.image}",
+                              "${UserUrl.baseUrl}${serviceCenter.image}",
                               height: screenHeight * 0.25,
                               width: double.infinity,
                               fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  "assets/icons/image.png", // Provide your fallback asset path
+                                  height: screenHeight * 0.25,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                );
+                              },
                             ),
                           ),
                           Padding(

@@ -153,7 +153,7 @@ class ServiceStation extends StatelessWidget {
                           ElevatedButton.icon(
                             onPressed: () {
                               // Handle Get Service Access action
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ServiceList(

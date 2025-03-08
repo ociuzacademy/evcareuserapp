@@ -19,6 +19,7 @@ class PreferenceValues {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.setBool(PreferenceKeys.isLoggedIn, false);
     await preferences.remove(PreferenceKeys.userId);
+    await preferences.remove(PreferenceKeys.vehicleId);
   }
 
   static Future<void> addVehicle({
