@@ -133,7 +133,9 @@ class ServiceStation extends StatelessWidget {
                                         width: screenWidth *
                                             0.02), // Responsive spacing
                                     Text(
-                                      center.workingHours!,
+                                      center.workingHours!.isEmpty
+                                          ? "10:00 AM - 06:00 PM"
+                                          : center.workingHours!,
                                       style: TextStyle(
                                           fontSize: screenWidth *
                                               0.035), // Responsive text size
